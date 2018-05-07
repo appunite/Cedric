@@ -54,16 +54,11 @@ class CedricTests: XCTestCase {
         
         delegate?.didCompleteWithError = { (error, _) in
             debugPrint(error ?? "No error ocurred")
-            if error != nil {
-                XCTFail("Did complete with error - this should not occur")
-            }
+            XCTAssertNil(error)
         }
         
         delegate?.didFinishDownloadingResource = { (_, url) in
-            if UIImage(contentsOfFile: url.path) == nil {
-                XCTFail("Could not create image at path")
-            }
-            
+            XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             didCompleteSuccessfuly.fulfill()
         }
         
@@ -119,9 +114,7 @@ class CedricTests: XCTestCase {
         }
         
         delegate?.didFinishDownloadingResource = { (_, url) in
-            if UIImage(contentsOfFile: url.path) == nil {
-                XCTFail("Could not create image at path")
-            }
+            XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             didCompleteSuccessfulySecondTime.fulfill()
         }
 
@@ -142,9 +135,7 @@ class CedricTests: XCTestCase {
         let didStartForSecondTime = expectation(description: "Did call start downloading delegate for second resource")
         
         delegate?.didFinishDownloadingResource = { (_, url) in
-            if UIImage(contentsOfFile: url.path) == nil {
-                XCTFail("Could not create image at path")
-            }
+            XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             didCompleteSuccessfulyFirstTime.fulfill()
         }
         
@@ -156,9 +147,7 @@ class CedricTests: XCTestCase {
         }
         
         delegate?.didFinishDownloadingResource = { (_, url) in
-            if UIImage(contentsOfFile: url.path) == nil {
-                XCTFail("Could not create image at path")
-            }
+            XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             XCTAssertEqual(url.lastPathComponent, res.destinationName.replacingOccurrences(of: ".", with: "(1)."))
             didCompleteSuccessfulySecondTime.fulfill()
         }

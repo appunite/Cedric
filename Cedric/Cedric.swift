@@ -30,8 +30,7 @@ public protocol CedricDelegate: class {
     /// - Parameters:
     ///   - cedric: Cedric object
     ///   - resource: Resource related with download
-    ///   - location: Location where downloaded file is stored
-    ///   - relativePath: Relative path of downloaded file (the one that should be stored)
+    ///   - file: Object that contains relative path to file
     func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toFile file: DownloadedFile)
     
     /// Invoked when error occured during downloading particular resource
@@ -173,13 +172,13 @@ extension Cedric: DownloadItemDelegate {
             let file = try DownloadedFile(absolutePath: location)
             DispatchQueue.main.async {
                 self.delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: item.resource, toFile: file) })
-                self.remove(downloadItem: item)
             }
+            remove(downloadItem: item)
         } catch let error {
             DispatchQueue.main.async {
                 self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, whenDownloadingResource: item.resource) })
-                self.remove(downloadItem: item)
             }
+            remove(downloadItem: item)
         }
     }
     
