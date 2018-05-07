@@ -24,10 +24,14 @@ public struct DownloadResource {
     /// Downloading mode: newFile - always create new file even if exist for particular filename, notDownloadIfExist - reuse downloaded files
     public let mode: DownloadMode
     
-    public init(id: String, source: URL, destinationName: String, mode: DownloadMode = .notDownloadIfExists) {
+    /// Attributes applied to downloaded file
+    public let attributes: [FileAttributeKey: Any]?
+    
+    public init(id: String, source: URL, destinationName: String, mode: DownloadMode = .notDownloadIfExists, attributes: [FileAttributeKey: Any]? = nil) {
         self.id = id
         self.source = source
         self.destinationName = destinationName
         self.mode = mode
+        self.attributes = attributes
     }
 }

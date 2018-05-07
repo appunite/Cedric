@@ -12,7 +12,20 @@
 		ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */; };
 		ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC171A20A031080033FA7B /* DownloadResource.swift */; };
 		ADAC171D20A031B50033FA7B /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */; };
+		ADAC172520A034A90033FA7B /* CedricTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172420A034A90033FA7B /* CedricTests.swift */; };
+		ADAC172720A034A90033FA7B /* Cedric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5EAD20209F6D9400AEB97E /* Cedric.framework */; };
+		ADAC172E20A036010033FA7B /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172D20A036010033FA7B /* TestResources.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ADAC172820A034A90033FA7B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD5EAD17209F6D9400AEB97E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD5EAD1F209F6D9400AEB97E;
+			remoteInfo = Cedric;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		AD5EAD20209F6D9400AEB97E /* Cedric.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cedric.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +35,10 @@
 		ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
 		ADAC171A20A031080033FA7B /* DownloadResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadResource.swift; sourceTree = "<group>"; };
 		ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
+		ADAC172220A034A90033FA7B /* CedricTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CedricTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADAC172420A034A90033FA7B /* CedricTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CedricTests.swift; sourceTree = "<group>"; };
+		ADAC172620A034A90033FA7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADAC172D20A036010033FA7B /* TestResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +49,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADAC171F20A034A90033FA7B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADAC172720A034A90033FA7B /* Cedric.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -39,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				AD5EAD22209F6D9400AEB97E /* Cedric */,
+				ADAC172320A034A90033FA7B /* CedricTests */,
 				AD5EAD21209F6D9400AEB97E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				AD5EAD20209F6D9400AEB97E /* Cedric.framework */,
+				ADAC172220A034A90033FA7B /* CedricTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -62,6 +89,16 @@
 				ADAC171A20A031080033FA7B /* DownloadResource.swift */,
 			);
 			path = Cedric;
+			sourceTree = "<group>";
+		};
+		ADAC172320A034A90033FA7B /* CedricTests */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC172420A034A90033FA7B /* CedricTests.swift */,
+				ADAC172620A034A90033FA7B /* Info.plist */,
+				ADAC172D20A036010033FA7B /* TestResources.swift */,
+			);
+			path = CedricTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,18 +133,40 @@
 			productReference = AD5EAD20209F6D9400AEB97E /* Cedric.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		ADAC172120A034A90033FA7B /* CedricTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADAC172A20A034A90033FA7B /* Build configuration list for PBXNativeTarget "CedricTests" */;
+			buildPhases = (
+				ADAC171E20A034A90033FA7B /* Sources */,
+				ADAC171F20A034A90033FA7B /* Frameworks */,
+				ADAC172020A034A90033FA7B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ADAC172920A034A90033FA7B /* PBXTargetDependency */,
+			);
+			name = CedricTests;
+			productName = CedricTests;
+			productReference = ADAC172220A034A90033FA7B /* CedricTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		AD5EAD17209F6D9400AEB97E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = AppUnite;
 				TargetAttributes = {
 					AD5EAD1F209F6D9400AEB97E = {
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 0930;
+					};
+					ADAC172120A034A90033FA7B = {
+						CreatedOnToolsVersion = 9.3;
 					};
 				};
 			};
@@ -124,12 +183,20 @@
 			projectRoot = "";
 			targets = (
 				AD5EAD1F209F6D9400AEB97E /* Cedric */,
+				ADAC172120A034A90033FA7B /* CedricTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AD5EAD1E209F6D9400AEB97E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADAC172020A034A90033FA7B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -150,7 +217,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADAC171E20A034A90033FA7B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADAC172520A034A90033FA7B /* CedricTests.swift in Sources */,
+				ADAC172E20A036010033FA7B /* TestResources.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ADAC172920A034A90033FA7B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD5EAD1F209F6D9400AEB97E /* Cedric */;
+			targetProxy = ADAC172820A034A90033FA7B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		AD5EAD26209F6D9400AEB97E /* Debug */ = {
@@ -326,6 +410,40 @@
 			};
 			name = Release;
 		};
+		ADAC172B20A034A90033FA7B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = CedricTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.AppUnite.CedricTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ADAC172C20A034A90033FA7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = CedricTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.AppUnite.CedricTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -343,6 +461,15 @@
 			buildConfigurations = (
 				AD5EAD29209F6D9400AEB97E /* Debug */,
 				AD5EAD2A209F6D9400AEB97E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADAC172A20A034A90033FA7B /* Build configuration list for PBXNativeTarget "CedricTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADAC172B20A034A90033FA7B /* Debug */,
+				ADAC172C20A034A90033FA7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

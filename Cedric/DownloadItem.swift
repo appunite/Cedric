@@ -45,6 +45,7 @@ internal class DownloadItem: NSObject {
     
     internal func cancel() {
         task?.cancel()
+        session?.invalidateAndCancel()
     }
     
     internal func resume() {
@@ -70,6 +71,9 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
         do {
             let destination = try path(forResource: resource)
             try FileManager.default.moveItem(at: location, to: destination)
+            if let attributes = resource.attributes {
+                try FileManager.default.setAttributes(attributes, ofItemAtPath: destination.path)
+            }
             completed = true
             delegate?.item(self, didFinishDownloadingTo: destination)
         } catch let error {
@@ -83,6 +87,12 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
         
         let downloads = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("Downloads")
+        
+        var isDir: ObjCBool = true
+        
+        if !FileManager.default.fileExists(atPath: downloads.path, isDirectory: &isDir) {
+            try FileManager.default.createDirectory(at: downloads, withIntermediateDirectories: true, attributes: nil)
+        }
 
         switch resource.mode {
         case .newFile:
@@ -108,7 +118,7 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
         while FileManager.default.fileExists(atPath: destinationPath.path) {
             existing += 1
             
-            let newFilenameWithoutExtension = "\(filenameWithoutExtension) (\(existing))"
+            let newFilenameWithoutExtension = "\(filenameWithoutExtension)(\(existing))"
             destinationPath = downloads.appendingPathComponent(newFilenameWithoutExtension).appendingPathExtension(fileExtension)
         }
         
