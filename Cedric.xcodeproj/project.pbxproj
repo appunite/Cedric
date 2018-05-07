@@ -8,12 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		AD5EAD25209F6D9400AEB97E /* Cedric.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5EAD23209F6D9400AEB97E /* Cedric.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1713209F6E3D0033FA7B /* Cedric.swift */; };
+		ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */; };
+		ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC171A20A031080033FA7B /* DownloadResource.swift */; };
+		ADAC171D20A031B50033FA7B /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AD5EAD20209F6D9400AEB97E /* Cedric.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cedric.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD5EAD23209F6D9400AEB97E /* Cedric.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cedric.h; sourceTree = "<group>"; };
 		AD5EAD24209F6D9400AEB97E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADAC1713209F6E3D0033FA7B /* Cedric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cedric.swift; sourceTree = "<group>"; };
+		ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
+		ADAC171A20A031080033FA7B /* DownloadResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadResource.swift; sourceTree = "<group>"; };
+		ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +56,10 @@
 			children = (
 				AD5EAD23209F6D9400AEB97E /* Cedric.h */,
 				AD5EAD24209F6D9400AEB97E /* Info.plist */,
+				ADAC1713209F6E3D0033FA7B /* Cedric.swift */,
+				ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */,
+				ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */,
+				ADAC171A20A031080033FA7B /* DownloadResource.swift */,
 			);
 			path = Cedric;
 			sourceTree = "<group>";
@@ -95,6 +107,7 @@
 				TargetAttributes = {
 					AD5EAD1F209F6D9400AEB97E = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0930;
 					};
 				};
 			};
@@ -130,6 +143,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */,
+				ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */,
+				ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */,
+				ADAC171D20A031B50033FA7B /* MulticastDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +276,7 @@
 		AD5EAD29209F6D9400AEB97E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -267,6 +285,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Cedric/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -275,6 +294,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.AppUnite.Cedric;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -283,6 +303,7 @@
 		AD5EAD2A209F6D9400AEB97E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -291,6 +312,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Cedric/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
