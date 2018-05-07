@@ -31,7 +31,8 @@ public protocol CedricDelegate: class {
     ///   - cedric: Cedric object
     ///   - resource: Resource related with download
     ///   - location: Location where downloaded file is stored
-    func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toLocation location: URL)
+    ///   - relativePath: Relative path of downloaded file (the one that should be stored)
+    func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toFile file: DownloadedFile)
     
     /// Invoked when error occured during downloading particular resource
     ///
@@ -72,7 +73,7 @@ public class Cedric {
         case .notDownloadIfExists:
             if let existing = existingFileIfAvailable(forResource: resource) {
                 DispatchQueue.main.async {
-                    self.delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: resource, toLocation: existing) })
+                    self.delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: resource, toFile: existing) })
                 }
                 return
             } else {
@@ -139,11 +140,12 @@ public class Cedric {
         try content.forEach({ try FileManager.default.removeItem(atPath: "\(documents.path)/\($0)")})
     }
     
-    private func existingFileIfAvailable(forResource resource: DownloadResource) -> URL? {
+    private func existingFileIfAvailable(forResource resource: DownloadResource) -> DownloadedFile? {
         guard let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Downloads").appendingPathComponent(resource.destinationName) else { return nil }
         
-        return FileManager.default.fileExists(atPath: url.path) ? url : nil
+        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        return try? DownloadedFile(absolutePath: url)
     }
 }
 
@@ -167,9 +169,17 @@ extension Cedric: DownloadItemDelegate {
     }
     
     internal func item(_ item: DownloadItem, didFinishDownloadingTo location: URL) {
-        DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: item.resource, toLocation: location) })
-            self.remove(downloadItem: item)
+        do {
+            let file = try DownloadedFile(absolutePath: location)
+            DispatchQueue.main.async {
+                self.delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: item.resource, toFile: file) })
+                self.remove(downloadItem: item)
+            }
+        } catch let error {
+            DispatchQueue.main.async {
+                self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, whenDownloadingResource: item.resource) })
+                self.remove(downloadItem: item)
+            }
         }
     }
     

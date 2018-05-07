@@ -233,8 +233,8 @@ class CedricDelegateProxy: CedricDelegate {
         didDownloadBytes?(bytesDownloaded, totalBytesExpected, resource)
     }
     
-    func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toLocation location: URL) {
-        didFinishDownloadingResource?(resource, location)
+    func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toFile file: DownloadedFile) {
+        didFinishDownloadingResource?(resource, file.url!)
     }
     
     func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, whenDownloadingResource resource: DownloadResource) {

@@ -15,6 +15,7 @@
 		ADAC172520A034A90033FA7B /* CedricTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172420A034A90033FA7B /* CedricTests.swift */; };
 		ADAC172720A034A90033FA7B /* Cedric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5EAD20209F6D9400AEB97E /* Cedric.framework */; };
 		ADAC172E20A036010033FA7B /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172D20A036010033FA7B /* TestResources.swift */; };
+		ADAC173020A0809E0033FA7B /* DownloadedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		ADAC172420A034A90033FA7B /* CedricTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CedricTests.swift; sourceTree = "<group>"; };
 		ADAC172620A034A90033FA7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADAC172D20A036010033FA7B /* TestResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
+		ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */,
 				ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */,
 				ADAC171A20A031080033FA7B /* DownloadResource.swift */,
+				ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */,
 			);
 			path = Cedric;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADAC173020A0809E0033FA7B /* DownloadedFile.swift in Sources */,
 				ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */,
 				ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */,
 				ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */,
