@@ -14,8 +14,8 @@ public struct DownloadedFile {
     public let relativePath: String
     
     /// Getter for url of file
-    public var url: URL? {
-        return try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(relativePath)
+    public func url() throws -> URL {
+        return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(relativePath)
     }
     
     internal init(absolutePath path: URL) throws {

@@ -139,6 +139,11 @@ public class Cedric {
         try content.forEach({ try FileManager.default.removeItem(atPath: "\(documents.path)/\($0)")})
     }
     
+    public func remove(downloadedFile file: DownloadedFile) throws {
+        let url = try file.url()
+        try FileManager.default.removeItem(at: url)
+    }
+    
     private func existingFileIfAvailable(forResource resource: DownloadResource) -> DownloadedFile? {
         guard let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Downloads").appendingPathComponent(resource.destinationName) else { return nil }

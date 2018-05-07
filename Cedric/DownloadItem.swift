@@ -90,7 +90,7 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
         
         var isDir: ObjCBool = true
         
-        if !FileManager.default.fileExists(atPath: downloads.path, isDirectory: &isDir) {
+        if FileManager.default.fileExists(atPath: downloads.path, isDirectory: &isDir) == false {
             try FileManager.default.createDirectory(at: downloads, withIntermediateDirectories: true, attributes: nil)
         }
 
