@@ -168,7 +168,7 @@ extension Cedric: DownloadItemDelegate {
         // single item progress report
         
         DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didDownloadBytes: bytes, fromTotalBytesExpected: item.totalBytesExpected, ofResource: item.resource) })
+            self.delegates.invoke({ $0.cedric(self, didDownloadBytes: bytes, fromTotalBytesExpected: item.task.countOfBytesExpectedToReceive, ofResource: item.resource) })
         }
     }
     

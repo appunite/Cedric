@@ -18,28 +18,19 @@ internal class DownloadItem: NSObject {
     
     internal let resource: DownloadResource
     internal weak var delegate: DownloadItemDelegate?
-    
-    internal var state: URLSessionTask.State {
-        return task?.state ?? .suspended
-    }
-    
-    private(set) var totalBytesExpected: Int64?
-    private(set) var bytesDownloaded: Int64
+
     private(set) var session: URLSession?
-    private(set) var task: URLSessionDownloadTask?
+    private(set) var task: URLSessionDownloadTask!
     private(set) var completed = false
     
     internal init(resource: DownloadResource, delegateQueue: OperationQueue?) {
         self.resource = resource
-        self.bytesDownloaded = 0
         
         super.init()
         
         self.session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: delegateQueue)
-
         let task = session?.downloadTask(with: resource.source)
         task?.taskDescription = resource.id
-        self.totalBytesExpected = task?.countOfBytesExpectedToReceive
         self.task = task
     }
     
@@ -61,9 +52,7 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        bytesDownloaded = totalBytesWritten
-        totalBytesExpected = totalBytesExpectedToWrite
-        delegate?.item(self, didDownloadBytes: bytesDownloaded)
+        delegate?.item(self, didDownloadBytes: totalBytesWritten)
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
