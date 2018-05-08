@@ -100,25 +100,8 @@ public class Cedric {
                 items.append(item)
             }
         }
-        
-        item.delegate = self
-        
-        let operation = BlockOperation(block: { [weak self] in
-            let semaphore = DispatchSemaphore(value: 0)
 
-            DispatchQueue.main.async {
-                guard let `self` = self else { return }
-                self.delegates.invoke({ $0.cedric(self, didStartDownloadingResource: resource, withTask: item.task) })
-            }
-            
-            item.completionBlock = {
-                semaphore.signal()
-            }
-            item.resume()
-            semaphore.wait()
-        })
-        
-        group.addAsyncOperation(operation: operation)
+        createAndScheduleOperation(forItem: item)
     }
     
     /// Cancel downloading resources with id
@@ -182,6 +165,27 @@ public class Cedric {
         
         guard FileManager.default.fileExists(atPath: url.path) else { return nil }
         return try? DownloadedFile(absolutePath: url)
+    }
+    
+    private func createAndScheduleOperation(forItem item: DownloadItem) {
+        item.delegate = self
+        
+        let operation = BlockOperation(block: { [weak self] in
+            let semaphore = DispatchSemaphore(value: 0)
+            
+            DispatchQueue.main.async {
+                guard let `self` = self else { return }
+                self.delegates.invoke({ $0.cedric(self, didStartDownloadingResource: item.resource, withTask: item.task) })
+            }
+            
+            item.completionBlock = {
+                semaphore.signal()
+            }
+            item.resume()
+            semaphore.wait()
+        })
+        
+        group.addAsyncOperation(operation: operation)
     }
 }
 
