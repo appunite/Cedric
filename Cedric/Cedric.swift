@@ -62,6 +62,7 @@ public extension CedricDelegate {
 public class Cedric {
     
     internal var delegates = MulticastDelegate<CedricDelegate>()
+    
     private var items: [DownloadItem]
     private let group: LimitedOperationGroup
     private let configuration: CedricConfiguration
@@ -102,7 +103,7 @@ public class Cedric {
         
         item.delegate = self
         
-        let startOperation = BlockOperation(block: { [weak self] in
+        let operation = BlockOperation(block: { [weak self] in
             let semaphore = DispatchSemaphore(value: 0)
 
             DispatchQueue.main.async {
@@ -113,13 +114,11 @@ public class Cedric {
             item.completionBlock = {
                 semaphore.signal()
             }
-            
             item.resume()
-            
             semaphore.wait()
         })
         
-        group.addAsyncOperation(operation: startOperation)
+        group.addAsyncOperation(operation: operation)
     }
     
     /// Cancel downloading resources with id

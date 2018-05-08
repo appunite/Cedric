@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// It's just a simple wrapper around OperationQueue for making extensions later and prevent
+/// containing two operation queues in one class
 internal class LimitedOperationGroup {
     
     let queue: OperationQueue // queue used only for scheduling tasks

@@ -12,10 +12,13 @@ public struct CedricConfiguration {
     
     public enum Mode {
         case serial
-        case paralell(max: Int)
+        case parallel(max: Int)
     }
     
+    /// Base queue of operations
     public let queue: OperationQueue
+    
+    /// Downloading mode serial / parallel
     public let mode: Mode
     
     public init(mode: Mode, queue: OperationQueue = OperationQueue()) {
@@ -23,15 +26,16 @@ public struct CedricConfiguration {
         self.mode = mode
     }
     
+    /// Default configuration is parallel up to 25 tasks
     public static var `default`: CedricConfiguration {
-        return CedricConfiguration(mode: .paralell(max: 25))
+        return CedricConfiguration(mode: .parallel(max: 25))
     }
     
     internal func limitedGroup() -> LimitedOperationGroup {
         switch mode {
         case .serial:
             return LimitedOperationGroup(limit: 1)
-        case .paralell(let limit):
+        case .parallel(let limit):
             return LimitedOperationGroup(limit: limit)
         }
     }

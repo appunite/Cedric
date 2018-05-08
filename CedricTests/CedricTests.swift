@@ -213,7 +213,7 @@ class CedricTests: XCTestCase {
     }
     
     func testSerialDownloading() {
-        // by default Cedric is working paralelly up to 25 tasks
+        // by default Cedric is working parallely up to 25 tasks
         sut = Cedric(configuration: CedricConfiguration(mode: .serial))
 
         if let proxy = delegate {
