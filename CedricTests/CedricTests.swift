@@ -47,7 +47,7 @@ class CedricTests: XCTestCase {
         
         var progressFulfilled = false
         delegate?.didDownloadBytes = { (bytes, total, _) in
-            guard progressFulfilled == false else { return }
+            guard progressFulfilled == false, bytes > 0, total > 0 else { return }
             didReportProgress.fulfill()
             progressFulfilled = true
         }
@@ -57,8 +57,13 @@ class CedricTests: XCTestCase {
             XCTAssertNil(error)
         }
         
-        delegate?.didFinishDownloadingResource = { (_, url) in
-            XCTAssertNotNil(UIImage(contentsOfFile: url.path))
+        delegate?.didFinishDownloadingResource = { (resource, url) in
+            let receivedImage = UIImage(contentsOfFile: url.path)
+            let originalImage = resource.localImageRepresentation
+            XCTAssertNotNil(receivedImage)
+            let receivedData: NSData = UIImagePNGRepresentation(receivedImage!)! as NSData
+            let originalData: NSData = UIImagePNGRepresentation(originalImage)! as NSData
+            XCTAssertEqual(receivedData.isEqual(originalData), true)
             didCompleteSuccessfuly.fulfill()
         }
         
@@ -135,7 +140,8 @@ class CedricTests: XCTestCase {
         let didStartForSecondTime = expectation(description: "Did call start downloading delegate for second resource")
         
         delegate?.didFinishDownloadingResource = { (_, url) in
-            XCTAssertNotNil(UIImage(contentsOfFile: url.path))
+            let image = UIImage(contentsOfFile: url.path)
+            XCTAssertNotNil(image)
             didCompleteSuccessfulyFirstTime.fulfill()
         }
         
@@ -210,23 +216,23 @@ class CedricTests: XCTestCase {
 class CedricDelegateProxy: CedricDelegate {
     
     var didStartDownloadingResource: ((DownloadResource) -> Void)?
-    var didDownloadBytes: ((Int64, Int64?, DownloadResource) -> Void)?
+    var didDownloadBytes: ((Int64, Int64, DownloadResource) -> Void)?
     var didFinishDownloadingResource: ((DownloadResource, URL) -> Void)?
     var didCompleteWithError: ((Error?, DownloadResource) -> Void)?
     
-    func cedric(_ cedric: Cedric, didStartDownloadingResource resource: DownloadResource) {
+    func cedric(_ cedric: Cedric, didStartDownloadingResource resource: DownloadResource, withTask task: URLSessionDownloadTask) {
         didStartDownloadingResource?(resource)
     }
     
-    func cedric(_ cedric: Cedric, didDownloadBytes bytesDownloaded: Int64, fromTotalBytesExpected totalBytesExpected: Int64?, ofResource resource: DownloadResource) {
-        didDownloadBytes?(bytesDownloaded, totalBytesExpected, resource)
+    func cedric(_ cedric: Cedric, didUpdateStatusOfTask task: URLSessionDownloadTask, relatedToResource resource: DownloadResource) {
+        didDownloadBytes?(task.countOfBytesReceived, task.countOfBytesExpectedToReceive, resource)
+    }
+    
+    func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, withTask task: URLSessionDownloadTask, whenDownloadingResource resource: DownloadResource) {
+        didCompleteWithError?(error, resource)
     }
     
     func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toFile file: DownloadedFile) {
         didFinishDownloadingResource?(resource, try! file.url())
-    }
-    
-    func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, whenDownloadingResource resource: DownloadResource) {
-        didCompleteWithError?(error, resource)
     }
 }

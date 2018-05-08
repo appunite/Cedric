@@ -14,16 +14,16 @@ public protocol CedricDelegate: class {
     /// - Parameters:
     ///   - cedric: Cedric object
     ///   - resource: Resource which download did start
-    func cedric(_ cedric: Cedric, didStartDownloadingResource resource: DownloadResource)
+    ///   - task: URLSessionDownloadTask for reading state and observing progress
+    func cedric(_ cedric: Cedric, didStartDownloadingResource resource: DownloadResource, withTask task: URLSessionDownloadTask)
     
     /// Invoked when next chunk of data is downloaded of particular item
     ///
     /// - Parameters:
     ///   - cedric: Cedric object
-    ///   - bytesDownloaded: Total bytes downloaded
-    ///   - totalBytesExpected: Total bytes expected to download
+    ///   - task: URLSessionDownloadTask for reading progress and state
     ///   - resource: Resource related with download
-    func cedric(_ cedric: Cedric, didDownloadBytes bytesDownloaded: Int64, fromTotalBytesExpected totalBytesExpected: Int64?, ofResource resource: DownloadResource)
+    func cedric(_ cedric: Cedric, didUpdateStatusOfTask task: URLSessionDownloadTask, relatedToResource resource: DownloadResource)
     
     /// Invoked when particular resource downloading is finished
     ///
@@ -33,13 +33,30 @@ public protocol CedricDelegate: class {
     ///   - file: Object that contains relative path to file
     func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toFile file: DownloadedFile)
     
-    /// Invoked when error occured during downloading particular resource
+    /// Invoked when finished and maybe error occured during downloading particular resource
     ///
     /// - Parameters:
     ///   - cedric: Cedric object
     ///   - error: Error that occured during downloading
+    ///   - task: URLSessionDownloadTask for getting status / progress
     ///   - resource: Downloaded resource
-    func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, whenDownloadingResource resource: DownloadResource)
+    func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, withTask task: URLSessionDownloadTask, whenDownloadingResource resource: DownloadResource)
+}
+
+public extension CedricDelegate {
+    // Default implementations for making methods optional
+    
+    public func cedric(_ cedric: Cedric, didStartDownloadingResource resource: DownloadResource, withTask task: URLSessionDownloadTask) {
+        
+    }
+    
+    public func cedric(_ cedric: Cedric, didUpdateStatusOfTask task: URLSessionDownloadTask, relatedToResource resource: DownloadResource) {
+        
+    }
+    
+    public func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, whenDownloadingResource resource: DownloadResource) {
+        
+    }
 }
 
 public class Cedric {
@@ -85,7 +102,7 @@ public class Cedric {
         item.resume()
         
         DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didStartDownloadingResource: resource) })
+            self.delegates.invoke({ $0.cedric(self, didStartDownloadingResource: resource, withTask: item.task) })
         }
     }
     
@@ -157,18 +174,18 @@ public class Cedric {
 
 extension Cedric: DownloadItemDelegate {
     
-    internal func item(_ item: DownloadItem, didCompleteWithError error: Error?) {
+    func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
         DispatchQueue.main.async {
             self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, whenDownloadingResource: item.resource) })
             self.remove(downloadItem: item)
         }
     }
     
-    internal func item(_ item: DownloadItem, didDownloadBytes bytes: Int64) {
+    func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask) {
         // single item progress report
         
         DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didDownloadBytes: bytes, fromTotalBytesExpected: item.task.countOfBytesExpectedToReceive, ofResource: item.resource) })
+            self.delegates.invoke({ $0.cedric(self, didUpdateStatusOfTask: task, relatedToResource: item.resource) })
         }
     }
     

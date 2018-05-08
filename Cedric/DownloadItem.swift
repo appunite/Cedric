@@ -9,8 +9,8 @@
 import Foundation
 
 internal protocol DownloadItemDelegate: class {
-    func item(_ item: DownloadItem, didCompleteWithError error: Error?)
-    func item(_ item: DownloadItem, didDownloadBytes bytes: Int64)
+    func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?)
+    func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask)
     func item(_ item: DownloadItem, didFinishDownloadingTo location: URL)
 }
 
@@ -19,7 +19,7 @@ internal class DownloadItem: NSObject {
     internal let resource: DownloadResource
     internal weak var delegate: DownloadItemDelegate?
 
-    private(set) var session: URLSession?
+    private var session: URLSession?
     private(set) var task: URLSessionDownloadTask!
     private(set) var completed = false
     
@@ -27,7 +27,7 @@ internal class DownloadItem: NSObject {
         self.resource = resource
         
         super.init()
-        
+
         self.session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: delegateQueue)
         let task = session?.downloadTask(with: resource.source)
         task?.taskDescription = resource.id
@@ -47,12 +47,12 @@ internal class DownloadItem: NSObject {
 extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        delegate?.item(self, didCompleteWithError: error)
+        delegate?.item(self, withTask: self.task, didCompleteWithError: error)
         session.finishTasksAndInvalidate()
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        delegate?.item(self, didDownloadBytes: totalBytesWritten)
+        delegate?.item(self, didUpdateStatusOfTask: self.task)
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
@@ -66,7 +66,7 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
             completed = true
             delegate?.item(self, didFinishDownloadingTo: destination)
         } catch let error {
-            delegate?.item(self, didCompleteWithError: error)
+            delegate?.item(self, withTask: self.task, didCompleteWithError: error)
         }
         
         session.finishTasksAndInvalidate()

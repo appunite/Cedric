@@ -16,6 +16,12 @@
 		ADAC172720A034A90033FA7B /* Cedric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5EAD20209F6D9400AEB97E /* Cedric.framework */; };
 		ADAC172E20A036010033FA7B /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172D20A036010033FA7B /* TestResources.swift */; };
 		ADAC173020A0809E0033FA7B /* DownloadedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */; };
+		ADD61E7920A22CD500616745 /* baboon.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7320A22CD500616745 /* baboon.png */; };
+		ADD61E7A20A22CD500616745 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7420A22CD500616745 /* airplane.png */; };
+		ADD61E7B20A22CD500616745 /* arctichare.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7520A22CD500616745 /* arctichare.png */; };
+		ADD61E7C20A22CD500616745 /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7620A22CD500616745 /* cat.png */; };
+		ADD61E7D20A22CD500616745 /* boat.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7720A22CD500616745 /* boat.png */; };
+		ADD61E7E20A22CD500616745 /* fruits.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7820A22CD500616745 /* fruits.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +47,12 @@
 		ADAC172620A034A90033FA7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADAC172D20A036010033FA7B /* TestResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
 		ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedFile.swift; sourceTree = "<group>"; };
+		ADD61E7320A22CD500616745 /* baboon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = baboon.png; path = CedricTests/TestResources/baboon.png; sourceTree = SOURCE_ROOT; };
+		ADD61E7420A22CD500616745 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = airplane.png; path = CedricTests/TestResources/airplane.png; sourceTree = SOURCE_ROOT; };
+		ADD61E7520A22CD500616745 /* arctichare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arctichare.png; path = CedricTests/TestResources/arctichare.png; sourceTree = SOURCE_ROOT; };
+		ADD61E7620A22CD500616745 /* cat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cat.png; path = CedricTests/TestResources/cat.png; sourceTree = SOURCE_ROOT; };
+		ADD61E7720A22CD500616745 /* boat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = boat.png; path = CedricTests/TestResources/boat.png; sourceTree = SOURCE_ROOT; };
+		ADD61E7820A22CD500616745 /* fruits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fruits.png; path = CedricTests/TestResources/fruits.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,11 +109,25 @@
 		ADAC172320A034A90033FA7B /* CedricTests */ = {
 			isa = PBXGroup;
 			children = (
+				ADD61E7220A22CC000616745 /* Resources */,
 				ADAC172420A034A90033FA7B /* CedricTests.swift */,
 				ADAC172620A034A90033FA7B /* Info.plist */,
 				ADAC172D20A036010033FA7B /* TestResources.swift */,
 			);
 			path = CedricTests;
+			sourceTree = "<group>";
+		};
+		ADD61E7220A22CC000616745 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ADD61E7420A22CD500616745 /* airplane.png */,
+				ADD61E7520A22CD500616745 /* arctichare.png */,
+				ADD61E7320A22CD500616745 /* baboon.png */,
+				ADD61E7720A22CD500616745 /* boat.png */,
+				ADD61E7620A22CD500616745 /* cat.png */,
+				ADD61E7820A22CD500616745 /* fruits.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,6 +229,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADD61E7920A22CD500616745 /* baboon.png in Resources */,
+				ADD61E7D20A22CD500616745 /* boat.png in Resources */,
+				ADD61E7E20A22CD500616745 /* fruits.png in Resources */,
+				ADD61E7B20A22CD500616745 /* arctichare.png in Resources */,
+				ADD61E7C20A22CD500616745 /* cat.png in Resources */,
+				ADD61E7A20A22CD500616745 /* airplane.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
