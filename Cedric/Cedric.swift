@@ -41,6 +41,14 @@ public protocol CedricDelegate: class {
     ///   - task: URLSessionDownloadTask for getting status / progress
     ///   - resource: Downloaded resource
     func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, withTask task: URLSessionDownloadTask, whenDownloadingResource resource: DownloadResource)
+
+    /// Invoked when queue finished since was empty
+    ///
+    /// - Parameters:
+    ///   - cedric: Cedric object
+    ///   - error: Optional error that occured during download, if nil job completed sucessfuly
+    func cedric(_ cedric: Cedric, didFinishWithMostRecentError error: Error?)
+    
 }
 
 public extension CedricDelegate {
@@ -57,6 +65,10 @@ public extension CedricDelegate {
     func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, withTask task: URLSessionDownloadTask, whenDownloadingResource resource: DownloadResource) {
 
     }
+    
+    func cedric(_ cedric: Cedric, didFinishWithMostRecentError error: Error?) {
+        
+    }
 }
 
 public class Cedric {
@@ -66,6 +78,7 @@ public class Cedric {
     private var items: [DownloadItem]
     private let group: LimitedOperationGroup
     private let configuration: CedricConfiguration
+    private var lastError: Error?
     
     public init(configuration: CedricConfiguration = CedricConfiguration.default) {
         self.items = []
@@ -84,6 +97,7 @@ public class Cedric {
     ///
     /// - Parameter resouce: resource to be downloaded
     public func enqueueDownload(forResource resource: DownloadResource) {
+        cleanQueueStatisticsIfNeeded()
         let item = DownloadItem(resource: resource, delegateQueue: configuration.queue)
         
         switch resource.mode {
@@ -167,6 +181,11 @@ public class Cedric {
         return try? DownloadedFile(absolutePath: url)
     }
     
+    private func cleanQueueStatisticsIfNeeded() {
+        guard items.isEmpty else { return }
+        lastError = nil
+    }
+    
     private func createAndScheduleOperation(forItem item: DownloadItem) {
         item.delegate = self
         
@@ -228,5 +247,10 @@ extension Cedric: DownloadItemDelegate {
         let item = items[index]
         item.delegate = nil
         items.remove(at: index)
+        
+        guard items.isEmpty else { return }
+        DispatchQueue.main.async {
+            self.delegates.invoke({ $0.cedric(self, didFinishWithMostRecentError: self.lastError)})
+        }
     }
 }

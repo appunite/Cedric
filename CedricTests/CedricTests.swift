@@ -230,8 +230,31 @@ class CedricTests: XCTestCase {
         }
         
         sut.enqueueMultipleDownloads(forResources: resources)
+    
         wait(for: didCompleteExpectations, timeout: 20.0, enforceOrder: true)
+    }
+    
+    func testGroupedDownloadDelegate() {
+        let didNotifyAboutQueueFinishing = expectation(description: "Did complete all tasks from the queue")
+
+        // by default Cedric is working parallely up to 25 tasks
+        // here we're also testing that tasks are added to queue in one moment ant only resumed
+        // serially
+        sut = Cedric(configuration: CedricConfiguration(mode: .serial))
         
+        if let proxy = delegate {
+            sut.addDelegate(proxy)
+        }
+        
+        
+        delegate?.didFinishWithMostRecentError = { error in
+            XCTAssertNil(error)
+            didNotifyAboutQueueFinishing.fulfill()
+        }
+        
+        sut.enqueueMultipleDownloads(forResources: resources)
+        
+        wait(for: [didNotifyAboutQueueFinishing], timeout: 20.0)
     }
 }
 
@@ -241,6 +264,7 @@ class CedricDelegateProxy: CedricDelegate {
     var didDownloadBytes: ((Int64, Int64, DownloadResource) -> Void)?
     var didFinishDownloadingResource: ((DownloadResource, URL) -> Void)?
     var didCompleteWithError: ((Error?, DownloadResource) -> Void)?
+    var didFinishWithMostRecentError: ((Error?) -> Void)?
     
     func cedric(_ cedric: Cedric, didStartDownloadingResource resource: DownloadResource, withTask task: URLSessionDownloadTask) {
         didStartDownloadingResource?(resource)
@@ -256,5 +280,9 @@ class CedricDelegateProxy: CedricDelegate {
     
     func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toFile file: DownloadedFile) {
         didFinishDownloadingResource?(resource, try! file.url())
+    }
+    
+    func cedric(_ cedric: Cedric, didFinishWithMostRecentError error: Error?) {
+        didFinishWithMostRecentError?(error)
     }
 }
