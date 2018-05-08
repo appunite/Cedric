@@ -46,16 +46,16 @@ public protocol CedricDelegate: class {
 public extension CedricDelegate {
     // Default implementations for making methods optional
     
-    public func cedric(_ cedric: Cedric, didStartDownloadingResource resource: DownloadResource, withTask task: URLSessionDownloadTask) {
+    func cedric(_ cedric: Cedric, didStartDownloadingResource resource: DownloadResource, withTask task: URLSessionDownloadTask) {
         
     }
     
-    public func cedric(_ cedric: Cedric, didUpdateStatusOfTask task: URLSessionDownloadTask, relatedToResource resource: DownloadResource) {
-        
+    func cedric(_ cedric: Cedric, didUpdateStatusOfTask task: URLSessionDownloadTask, relatedToResource resource: DownloadResource) {
+
     }
     
-    public func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, whenDownloadingResource resource: DownloadResource) {
-        
+    func cedric(_ cedric: Cedric, didCompleteWithError error: Error?, withTask task: URLSessionDownloadTask, whenDownloadingResource resource: DownloadResource) {
+
     }
 }
 
@@ -176,7 +176,7 @@ extension Cedric: DownloadItemDelegate {
     
     func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
         DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, whenDownloadingResource: item.resource) })
+            self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: item.resource) })
             self.remove(downloadItem: item)
         }
     }
@@ -198,7 +198,7 @@ extension Cedric: DownloadItemDelegate {
             remove(downloadItem: item)
         } catch let error {
             DispatchQueue.main.async {
-                self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, whenDownloadingResource: item.resource) })
+                self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, withTask: item.task, whenDownloadingResource: item.resource) })
             }
             remove(downloadItem: item)
         }
