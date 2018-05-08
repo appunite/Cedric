@@ -12,7 +12,7 @@ import XCTest
 class CedricTests: XCTestCase {
     
     let resources = TestResources.standardResources
-    let sut = Cedric()
+    var sut = Cedric()
     var delegate: CedricDelegateProxy?
     
     override func setUp() {
@@ -210,6 +210,28 @@ class CedricTests: XCTestCase {
         }
         
         wait(for: [removeExpectation], timeout: 1.0)
+    }
+    
+    func testSerialDownloading() {
+        // by default Cedric is working paralelly up to 25 tasks
+        sut = Cedric(configuration: CedricConfiguration(mode: .serial))
+
+        if let proxy = delegate {
+            sut.addDelegate(proxy)
+        }
+
+        let didCompleteExpectations = resources.map { expectation(description: "Did complete downloading item with id: \($0.id)") }
+        
+        delegate?.didFinishDownloadingResource = { (resource, url) in
+            guard let index = self.resources.index(where: { $0.id == resource.id }) else { return }
+            XCTAssertNotNil(UIImage(contentsOfFile: url.path))
+            debugPrint("Did download task with id \(resource.id)")
+            didCompleteExpectations[index].fulfill()
+        }
+        
+        sut.enqueueMultipleDownloads(forResources: resources)
+        wait(for: didCompleteExpectations, timeout: 20.0, enforceOrder: true)
+        
     }
 }
 

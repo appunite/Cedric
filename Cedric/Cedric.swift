@@ -63,11 +63,13 @@ public class Cedric {
     
     internal var delegates = MulticastDelegate<CedricDelegate>()
     private var items: [DownloadItem]
-    private var operationQueue: OperationQueue
+    private let group: LimitedOperationGroup
+    private let configuration: CedricConfiguration
     
-    public init(operationQueue: OperationQueue = OperationQueue()) {
-        self.operationQueue = operationQueue
+    public init(configuration: CedricConfiguration = CedricConfiguration.default) {
         self.items = []
+        self.configuration = configuration
+        self.group = configuration.limitedGroup()
     }
     
     /// Schedule multiple downloads
@@ -81,7 +83,7 @@ public class Cedric {
     ///
     /// - Parameter resouce: resource to be downloaded
     public func enqueueDownload(forResource resource: DownloadResource) {
-        let item = DownloadItem(resource: resource, delegateQueue: operationQueue)
+        let item = DownloadItem(resource: resource, delegateQueue: configuration.queue)
         
         switch resource.mode {
         case .newFile:
@@ -99,11 +101,25 @@ public class Cedric {
         }
         
         item.delegate = self
-        item.resume()
         
-        DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didStartDownloadingResource: resource, withTask: item.task) })
-        }
+        let startOperation = BlockOperation(block: { [weak self] in
+            let semaphore = DispatchSemaphore(value: 0)
+
+            DispatchQueue.main.async {
+                guard let `self` = self else { return }
+                self.delegates.invoke({ $0.cedric(self, didStartDownloadingResource: resource, withTask: item.task) })
+            }
+            
+            item.completionBlock = {
+                semaphore.signal()
+            }
+            
+            item.resume()
+            
+            semaphore.wait()
+        })
+        
+        group.addAsyncOperation(operation: startOperation)
     }
     
     /// Cancel downloading resources with id

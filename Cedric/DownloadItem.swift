@@ -18,6 +18,7 @@ internal class DownloadItem: NSObject {
     
     internal let resource: DownloadResource
     internal weak var delegate: DownloadItemDelegate?
+    internal var completionBlock: (() -> Void)? // indicate that task is finished
 
     private var session: URLSession?
     private(set) var task: URLSessionDownloadTask!
@@ -37,6 +38,7 @@ internal class DownloadItem: NSObject {
     internal func cancel() {
         task?.cancel()
         session?.invalidateAndCancel()
+        completionBlock?()
     }
     
     internal func resume() {
@@ -49,6 +51,7 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         delegate?.item(self, withTask: self.task, didCompleteWithError: error)
         session.finishTasksAndInvalidate()
+        completionBlock?()
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
@@ -70,6 +73,7 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
         }
         
         session.finishTasksAndInvalidate()
+        completionBlock?()
     }
     
     private func path(forResource resource: DownloadResource) throws -> URL {

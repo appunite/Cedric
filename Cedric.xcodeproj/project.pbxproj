@@ -22,6 +22,8 @@
 		ADD61E7C20A22CD500616745 /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7620A22CD500616745 /* cat.png */; };
 		ADD61E7D20A22CD500616745 /* boat.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7720A22CD500616745 /* boat.png */; };
 		ADD61E7E20A22CD500616745 /* fruits.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7820A22CD500616745 /* fruits.png */; };
+		ADD61E8020A25A4000616745 /* LimitedOperationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */; };
+		ADD61E8220A25A5F00616745 /* CedricConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD61E8120A25A5F00616745 /* CedricConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		ADD61E7620A22CD500616745 /* cat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cat.png; path = CedricTests/TestResources/cat.png; sourceTree = SOURCE_ROOT; };
 		ADD61E7720A22CD500616745 /* boat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = boat.png; path = CedricTests/TestResources/boat.png; sourceTree = SOURCE_ROOT; };
 		ADD61E7820A22CD500616745 /* fruits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fruits.png; path = CedricTests/TestResources/fruits.png; sourceTree = SOURCE_ROOT; };
+		ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedOperationGroup.swift; sourceTree = "<group>"; };
+		ADD61E8120A25A5F00616745 /* CedricConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CedricConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,8 @@
 				AD5EAD23209F6D9400AEB97E /* Cedric.h */,
 				AD5EAD24209F6D9400AEB97E /* Info.plist */,
 				ADAC1713209F6E3D0033FA7B /* Cedric.swift */,
+				ADD61E8120A25A5F00616745 /* CedricConfiguration.swift */,
+				ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */,
 				ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */,
 				ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */,
 				ADAC171A20A031080033FA7B /* DownloadResource.swift */,
@@ -247,6 +253,8 @@
 			files = (
 				ADAC173020A0809E0033FA7B /* DownloadedFile.swift in Sources */,
 				ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */,
+				ADD61E8020A25A4000616745 /* LimitedOperationGroup.swift in Sources */,
+				ADD61E8220A25A5F00616745 /* CedricConfiguration.swift in Sources */,
 				ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */,
 				ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */,
 				ADAC171D20A031B50033FA7B /* MulticastDelegate.swift in Sources */,
