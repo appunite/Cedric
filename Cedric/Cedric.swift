@@ -94,7 +94,15 @@ public class Cedric {
     /// - Parameter resource: Resource related with task (if using newFile mode first matching task is returned)
     /// - Returns: URLSessionDownloadTask for observing state / progress 
     public func downloadTask(forResource resource: DownloadResource) -> URLSessionDownloadTask? {
-        return items.first(where: { $0.resource.id == resource.id })?.task
+        return downloadTask(forResourceWithId: resource.id)
+    }
+    
+    /// Returns download task for state observing
+    ///
+    /// - Parameter resourceId: Id of resource related with task (if using newFile mode first matching task is returned)
+    /// - Returns: URLSessionDownloadTask for observing state / progress
+    public func downloadTask(forResourceWithId resourceId: String) -> URLSessionDownloadTask? {
+        return items.first(where: { $0.resource.id == resourceId })?.task
     }
     
     /// Check is cedric currently downloading resource with particular id
