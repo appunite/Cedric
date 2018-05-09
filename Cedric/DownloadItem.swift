@@ -14,10 +14,6 @@ internal protocol DownloadItemDelegate: class {
     func item(_ item: DownloadItem, didFinishDownloadingTo location: URL)
 }
 
-public enum DownloadError: Error {
-    case missingURL
-}
-
 internal class DownloadItem: NSObject {
     
     internal let resource: DownloadResource

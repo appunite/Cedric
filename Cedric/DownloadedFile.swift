@@ -27,14 +27,4 @@ public struct DownloadedFile {
     public init(relativePath: String) {
         self.relativePath = relativePath
     }
-    
-    /// Get url of file with expected name
-    ///
-    /// - Parameter fileName: Preferred filename
-    /// - Returns: URL if file with particular name exists in downloads directory
-    public static func url(forPreferredFileName fileName: String) -> URL? {
-        let url = try? DownloadsFileManager().downloadsDirectory().appendingPathComponent(fileName)
-        guard let unwrappedUrl = url, FileManager.default.fileExists(atPath: unwrappedUrl.path) else { return nil }
-        return unwrappedUrl
-    }
 }

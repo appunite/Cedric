@@ -52,7 +52,7 @@ public class Cedric {
         case .newFile:
             items.append(item)
         case .notDownloadIfExists:
-            if let existing = existingFileIfAvailable(forResource: resource) {
+            if let existing = existingFileIfAvailable(forExpectedFilename: resource.destinationName) {
                 delegates.invoke({ $0.cedric(self,
                                              didFinishDownloadingResource: resource,
                                              toFile: existing)
@@ -135,9 +135,7 @@ public class Cedric {
     ///
     /// - Throws: Exceptions occured while removing files
     public func cleanDownloadsDirectory() throws {
-        let documents = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Downloads")
-        let content = try FileManager.default.contentsOfDirectory(atPath: documents.path)
-        try content.forEach({ try FileManager.default.removeItem(atPath: "\(documents.path)/\($0)")})
+        try fileManager.cleanDownloadsDirectory()
     }
     
     /// Remove particular file
@@ -146,15 +144,17 @@ public class Cedric {
     /// - Throws: Exceptions occured while removing file
     public func remove(downloadedFile file: DownloadedFile) throws {
         let url = try file.url()
-        try FileManager.default.removeItem(at: url)
+        try fileManager.removeFile(atPath: url)
     }
-    
-    private func existingFileIfAvailable(forResource resource: DownloadResource) -> DownloadedFile? {
-        guard let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("Downloads").appendingPathComponent(resource.destinationName) else { return nil }
-        
-        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
-        return try? DownloadedFile(absolutePath: url)
+
+    /// Get file for expected filename
+    ///
+    /// - Parameter filename: expected filename
+    /// - Returns: DownloadedFile object if file exists at path
+    public func existingFileIfAvailable(forExpectedFilename filename: String) -> DownloadedFile? {
+        let url = try? DownloadsFileManager().downloadsDirectory().appendingPathComponent(filename)
+        guard let unwrappedUrl = url, FileManager.default.fileExists(atPath: unwrappedUrl.path) else { return nil }
+        return try? DownloadedFile(absolutePath: unwrappedUrl)
     }
     
     private func cleanQueueStatisticsIfNeeded() {

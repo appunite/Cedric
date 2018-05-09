@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AD423AD820A37C00003C3E99 /* DownloadsFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD423AD720A37C00003C3E99 /* DownloadsFileManager.swift */; };
 		AD5EAD25209F6D9400AEB97E /* Cedric.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5EAD23209F6D9400AEB97E /* Cedric.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADA1DFA120A390C7000522A2 /* DownloadError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFA020A390C7000522A2 /* DownloadError.swift */; };
 		ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1713209F6E3D0033FA7B /* Cedric.swift */; };
 		ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */; };
 		ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC171A20A031080033FA7B /* DownloadResource.swift */; };
@@ -43,6 +44,7 @@
 		AD5EAD20209F6D9400AEB97E /* Cedric.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cedric.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD5EAD23209F6D9400AEB97E /* Cedric.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cedric.h; sourceTree = "<group>"; };
 		AD5EAD24209F6D9400AEB97E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADA1DFA020A390C7000522A2 /* DownloadError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadError.swift; sourceTree = "<group>"; };
 		ADAC1713209F6E3D0033FA7B /* Cedric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cedric.swift; sourceTree = "<group>"; };
 		ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
 		ADAC171A20A031080033FA7B /* DownloadResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadResource.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */,
 				ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */,
 				ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */,
+				ADA1DFA020A390C7000522A2 /* DownloadError.swift */,
 				ADAC171A20A031080033FA7B /* DownloadResource.swift */,
 				ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */,
 			);
@@ -259,6 +262,7 @@
 			files = (
 				ADAC173020A0809E0033FA7B /* DownloadedFile.swift in Sources */,
 				ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */,
+				ADA1DFA120A390C7000522A2 /* DownloadError.swift in Sources */,
 				AD423AD820A37C00003C3E99 /* DownloadsFileManager.swift in Sources */,
 				ADD61E8020A25A4000616745 /* LimitedOperationGroup.swift in Sources */,
 				ADD61E8220A25A5F00616745 /* CedricConfiguration.swift in Sources */,

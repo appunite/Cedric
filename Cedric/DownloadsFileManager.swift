@@ -12,6 +12,8 @@ internal protocol FileManagerType: class {
     func downloadsDirectory(create: Bool) throws -> URL
     func createUrl(forName name: String, unique: Bool) throws -> URL
     func move(fromPath source: URL, toPath destination: URL, resource: DownloadResource) throws
+    func cleanDownloadsDirectory() throws
+    func removeFile(atPath path: URL) throws
 }
 
 internal class DownloadsFileManager: FileManagerType {
@@ -37,6 +39,16 @@ internal class DownloadsFileManager: FileManagerType {
         if let attributes = resource.attributes {
             try FileManager.default.setAttributes(attributes, ofItemAtPath: destination.path)
         }
+    }
+    
+    internal func cleanDownloadsDirectory() throws {
+        let downloads = try downloadsDirectory()
+        let content = try FileManager.default.contentsOfDirectory(atPath: downloads.path)
+        try content.forEach({ try FileManager.default.removeItem(atPath: "\(downloads.path)/\($0)")})
+    }
+    
+    internal func removeFile(atPath path: URL) throws {
+        try FileManager.default.removeItem(atPath: path.path)
     }
     
     internal func uniquePath(forName name: String) throws -> URL {
