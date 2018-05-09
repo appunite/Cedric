@@ -29,13 +29,7 @@ internal class DownloadItem: NSObject {
         
         super.init()
 
-        let configuration = URLSessionConfiguration()
-    
-        configuration.allowsCellularAccess = true
-        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-        if #available(iOS 11.0, *) {
-            configuration.waitsForConnectivity = true
-        }
+        let configuration = URLSessionConfiguration.default
         
         self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: delegateQueue)
     
