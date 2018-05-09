@@ -8,8 +8,8 @@
 
 import Foundation
 
-extension FileManager {
-    static func cedricPath(forResourceWithName name: String) -> URL? {
+public extension FileManager {
+    public static func cedricPath(forResourceWithName name: String) -> URL? {
         guard let downloads = try? DownloadsFileManager().downloadsDirectory() else { return nil }
         let path = downloads.appendingPathComponent(name)
         guard FileManager.default.fileExists(atPath: path.path) else { return nil }
