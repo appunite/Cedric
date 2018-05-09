@@ -96,6 +96,13 @@ public class Cedric {
     public func downloadTask(forResource resource: DownloadResource) -> URLSessionDownloadTask? {
         return items.first(where: { $0.resource.id == resource.id })?.task
     }
+    
+    /// Check is cedric currently downloading resource with particular id
+    ///
+    /// - Parameter id: Unique id of resource
+    public func isDownloading(resourceWithId id: String) -> Bool {
+        return items.contains(where: { $0.resource.id == id })
+    }
 
     /// Remove all files downloaded by Cedric
     ///
