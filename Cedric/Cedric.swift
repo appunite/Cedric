@@ -62,13 +62,19 @@ public class Cedric {
     public func cancel(downloadingResourcesWithId id: String) {
         items.filter { $0.resource.id == id }
             .filter { $0.completed == false }
-            .forEach { $0.cancel() }
+            .forEach {
+                remove(downloadItem: $0)
+                $0.cancel()
+            }
     }
     
     /// Cancel all running downloads
     public func cancelAllDownloads() {
         items.filter { $0.completed == false }
-            .forEach { $0.cancel() }
+            .forEach {
+                remove(downloadItem: $0)
+                $0.cancel()
+            }
     }
     
     /// Insert new delegate for multicast
