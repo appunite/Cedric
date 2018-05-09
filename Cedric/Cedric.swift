@@ -167,9 +167,11 @@ public class Cedric {
         
         group.addAsyncOperation(operation: operation)
         
-        delegates.invoke({ $0.cedric(self,
-                                     didStartDownloadingResource: item.resource,
-                                     withTask: item.task)
+        delegates.invoke({ [weak item] in
+            guard let strongItem = item else { return }
+            $0.cedric(self,
+                      didStartDownloadingResource: strongItem.resource,
+                      withTask: strongItem.task)
         })
     }
 }
@@ -180,10 +182,12 @@ extension Cedric: DownloadItemDelegate {
     
     func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
         
-        delegates.invoke({ $0.cedric(self,
-                                     didCompleteWithError: error,
-                                     withTask: task,
-                                     whenDownloadingResource: item.resource)
+        delegates.invoke({ [weak item] in
+            guard let strongItem = item else { return }
+            $0.cedric(self,
+                      didCompleteWithError: error,
+                      withTask: task,
+                      whenDownloadingResource: strongItem.resource)
         })
         
         remove(downloadItem: item)
@@ -191,25 +195,31 @@ extension Cedric: DownloadItemDelegate {
     
     func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask) {
         // single item progress report
-        delegates.invoke({ $0.cedric(self,
-                                     didUpdateStatusOfTask: task,
-                                     relatedToResource: item.resource)
+        delegates.invoke({ [weak item] in
+            guard let strongItem = item else { return }
+            $0.cedric(self,
+                      didUpdateStatusOfTask: task,
+                      relatedToResource: strongItem.resource)
         })
     }
     
     internal func item(_ item: DownloadItem, didFinishDownloadingTo location: URL) {
         do {
             let file = try DownloadedFile(absolutePath: location)
-            delegates.invoke({ $0.cedric(self,
-                                         didFinishDownloadingResource: item.resource,
-                                         toFile: file)
+            delegates.invoke({ [weak item] in
+                guard let strongItem = item else { return }
+                $0.cedric(self,
+                          didFinishDownloadingResource: strongItem.resource,
+                          toFile: file)
             })
             remove(downloadItem: item)
         } catch let error {
-            delegates.invoke({ $0.cedric(self,
-                                         didCompleteWithError: error,
-                                         withTask: item.task,
-                                         whenDownloadingResource: item.resource)
+            delegates.invoke({ [weak item] in
+                guard let strongItem = item else { return }
+                $0.cedric(self,
+                          didCompleteWithError: error,
+                          withTask: strongItem.task,
+                          whenDownloadingResource: strongItem.resource)
             })
             remove(downloadItem: item)
         }

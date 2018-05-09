@@ -29,7 +29,16 @@ internal class DownloadItem: NSObject {
         
         super.init()
 
-        self.session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: delegateQueue)
+        let configuration = URLSessionConfiguration()
+    
+        configuration.allowsCellularAccess = true
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        if #available(iOS 11.0, *) {
+            configuration.waitsForConnectivity = true
+        }
+        
+        self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: delegateQueue)
+    
         let task = session?.downloadTask(with: resource.source)
         task?.taskDescription = resource.id
         self.task = task
