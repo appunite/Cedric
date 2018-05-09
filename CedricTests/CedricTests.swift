@@ -57,7 +57,8 @@ class CedricTests: XCTestCase {
             XCTAssertNil(error)
         }
         
-        delegate?.didFinishDownloadingResource = { (resource, url) in
+        delegate?.didFinishDownloadingResource = { (resource, file) in
+            let url = try! file.url()
             let receivedImage = UIImage(contentsOfFile: url.path)
             let originalImage = resource.localImageRepresentation
             XCTAssertNotNil(receivedImage)
@@ -82,7 +83,8 @@ class CedricTests: XCTestCase {
             didStartExpectations[index].fulfill()
         }
         
-        delegate?.didFinishDownloadingResource = { (resource, url) in
+        delegate?.didFinishDownloadingResource = { (resource, file) in
+            let url = try! file.url()
             guard let index = sources.index(where: { $0.id == resource.id }) else { return }
             XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             didCompleteExpectations[index].fulfill()
@@ -103,7 +105,8 @@ class CedricTests: XCTestCase {
         let didNotStartDownloadingSecondTime = expectation(description: "Did not call start downloading delegate")
         didNotStartDownloadingSecondTime.isInverted = true
         
-        delegate?.didFinishDownloadingResource = { (_, url) in
+        delegate?.didFinishDownloadingResource = { (_, file) in
+            let url = try! file.url()
             if UIImage(contentsOfFile: url.path) == nil {
                 XCTFail("Could not create image at path")
             }
@@ -118,7 +121,8 @@ class CedricTests: XCTestCase {
             didNotStartDownloadingSecondTime.fulfill()
         }
         
-        delegate?.didFinishDownloadingResource = { (_, url) in
+        delegate?.didFinishDownloadingResource = { (_, file) in
+            let url = try! file.url()
             XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             didCompleteSuccessfulySecondTime.fulfill()
         }
@@ -139,7 +143,8 @@ class CedricTests: XCTestCase {
         let didCompleteSuccessfulySecondTime = expectation(description: "Did complete with success for first time")
         let didStartForSecondTime = expectation(description: "Did call start downloading delegate for second resource")
         
-        delegate?.didFinishDownloadingResource = { (_, url) in
+        delegate?.didFinishDownloadingResource = { (_, file) in
+            let url = try! file.url()
             let image = UIImage(contentsOfFile: url.path)
             XCTAssertNotNil(image)
             didCompleteSuccessfulyFirstTime.fulfill()
@@ -152,7 +157,8 @@ class CedricTests: XCTestCase {
             didStartForSecondTime.fulfill()
         }
         
-        delegate?.didFinishDownloadingResource = { (_, url) in
+        delegate?.didFinishDownloadingResource = { (_, file) in
+            let url = try! file.url()
             XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             XCTAssertEqual(url.lastPathComponent, res.destinationName.replacingOccurrences(of: ".", with: "(1)."))
             didCompleteSuccessfulySecondTime.fulfill()
@@ -172,7 +178,7 @@ class CedricTests: XCTestCase {
         let didComplete = expectation(description: "Did not call complete successfully")
         didComplete.isInverted = true
         
-        delegate?.didFinishDownloadingResource = { (_, url) in
+        delegate?.didFinishDownloadingResource = { (_, _) in
             // should not be fulfilled
             didComplete.fulfill()
         }
@@ -222,7 +228,8 @@ class CedricTests: XCTestCase {
 
         let didCompleteExpectations = resources.map { expectation(description: "Did complete downloading item with id: \($0.id)") }
         
-        delegate?.didFinishDownloadingResource = { (resource, url) in
+        delegate?.didFinishDownloadingResource = { (resource, file) in
+            let url = try! file.url()
             guard let index = self.resources.index(where: { $0.id == resource.id }) else { return }
             XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             debugPrint("Did download task with id \(resource.id)")
@@ -256,13 +263,49 @@ class CedricTests: XCTestCase {
         
         wait(for: [didNotifyAboutQueueFinishing], timeout: 20.0)
     }
+    
+    func testFileRemoval() {
+        guard let resource = resources.first else {
+            XCTFail("No resource to download")
+            return
+        }
+        
+        let didCompleteSuccessfuly = expectation(description: "Did complete with success")
+        let didRemoveFile = expectation(description: "Did remove file after downloading sucessfuly")
+        
+        delegate?.didCompleteWithError = { (error, _) in
+            XCTAssertNil(error)
+        }
+        
+        delegate?.didFinishDownloadingResource = { (resource, file) in
+            let url = try! file.url()
+            let receivedImage = UIImage(contentsOfFile: url.path)
+            let originalImage = resource.localImageRepresentation
+            XCTAssertNotNil(receivedImage)
+            let receivedData: NSData = UIImagePNGRepresentation(receivedImage!)! as NSData
+            let originalData: NSData = UIImagePNGRepresentation(originalImage)! as NSData
+            XCTAssertEqual(receivedData.isEqual(originalData), true)
+            didCompleteSuccessfuly.fulfill()
+
+            do {
+                try self.sut.remove(downloadedFile: file)
+            } catch {
+                XCTFail("File removal failed")
+            }
+            
+            didRemoveFile.fulfill()
+        }
+        
+        sut.enqueueDownload(forResource: resource)
+        wait(for: [didCompleteSuccessfuly, didRemoveFile], timeout: 20.0, enforceOrder: true)
+    }
 }
 
 class CedricDelegateProxy: CedricDelegate {
     
     var didStartDownloadingResource: ((DownloadResource) -> Void)?
     var didDownloadBytes: ((Int64, Int64, DownloadResource) -> Void)?
-    var didFinishDownloadingResource: ((DownloadResource, URL) -> Void)?
+    var didFinishDownloadingResource: ((DownloadResource, DownloadedFile) -> Void)?
     var didCompleteWithError: ((Error?, DownloadResource) -> Void)?
     var didFinishWithMostRecentError: ((Error?) -> Void)?
     
@@ -279,7 +322,7 @@ class CedricDelegateProxy: CedricDelegate {
     }
     
     func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toFile file: DownloadedFile) {
-        didFinishDownloadingResource?(resource, try! file.url())
+        didFinishDownloadingResource?(resource, file)
     }
     
     func cedric(_ cedric: Cedric, didFinishWithMostRecentError error: Error?) {
