@@ -10,26 +10,29 @@ import Foundation
 
 public class Cedric {
     
-    internal var delegates = MulticastDelegate<CedricDelegate>()
+    internal var delegates: MulticastDelegate<CedricDelegate>
     
     private var items: [DownloadItem]
     private let group: LimitedOperationGroup
     private let configuration: CedricConfiguration
     private var lastError: Error?
-    private var fileManager: FileManagerType
+    private let fileManager: FileManagerType
     
-    public init(configuration: CedricConfiguration = CedricConfiguration.default) {
+    public init(configuration: CedricConfiguration = CedricConfiguration.default, delegateQueue: DispatchQueue = DispatchQueue.main) {
         self.items = []
         self.configuration = configuration
         self.group = configuration.limitedGroup()
         self.fileManager = DownloadsFileManager()
+        delegates = MulticastDelegate<CedricDelegate>(delegateQueue: delegateQueue)
+
     }
     
-    internal init(configuration: CedricConfiguration = CedricConfiguration.default, fileManager: FileManagerType = DownloadsFileManager()) {
+    internal init(configuration: CedricConfiguration = CedricConfiguration.default, fileManager: FileManagerType = DownloadsFileManager(), delegateQueue: DispatchQueue = DispatchQueue.main) {
         self.items = []
         self.configuration = configuration
         self.group = configuration.limitedGroup()
         self.fileManager = fileManager
+        delegates = MulticastDelegate<CedricDelegate>(delegateQueue: delegateQueue)
     }
     
     /// Schedule multiple downloads
@@ -44,22 +47,17 @@ public class Cedric {
     /// - Parameter resouce: resource to be downloaded
     public func enqueueDownload(forResource resource: DownloadResource) throws {
         cleanQueueStatisticsIfNeeded()
-        let item = try DownloadItem(resource: resource,
-                                delegateQueue: configuration.queue,
-                                fileManager: fileManager)
+        let item = try DownloadItem(resource: resource, delegateQueue: configuration.queue, fileManager: fileManager)
         
         switch resource.mode {
         case .newFile:
             items.append(item)
         case .notDownloadIfExists:
             if let existing = existingFileIfAvailable(forExpectedFilename: resource.destinationName) {
-                delegates.invoke({ $0.cedric(self,
-                                             didFinishDownloadingResource: resource,
-                                             toFile: existing)
-                })
+                delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: resource, toFile: existing) })
                 return
             } else {
-                guard items.contains(where: { $0.resource.id == resource.id }) == false else { return } 
+                guard !items.contains(where: { $0.resource.destinationName == resource.destinationName }) else { return }
                 items.append(item)
             }
         }
@@ -73,9 +71,8 @@ public class Cedric {
     public func cancel(downloadingResourcesWithId id: String) {
         items.filter { $0.resource.id == id }
             .forEach {
-                if $0.completed == false {
-                    $0.cancel()
-                }
+                $0.delegate = nil
+                if !$0.completed { $0.cancel() }
                 remove(downloadItem: $0)
             }
     }
@@ -83,9 +80,8 @@ public class Cedric {
     /// Cancel all running downloads
     public func cancelAllDownloads() {
         items.forEach {
-            if $0.completed == false {
-                $0.cancel()
-            }
+            $0.delegate = nil
+            if !$0.completed { $0.cancel() }
             remove(downloadItem: $0)
         }
     }
@@ -94,18 +90,14 @@ public class Cedric {
     ///
     /// - Parameter object: Object
     public func addDelegate<T: CedricDelegate>(_ object: T) {
-        DispatchQueue.main.async {
-            self.delegates.addDelegate(object)
-        }
+        delegates.addDelegate(object)
     }
     
     /// Remove particular delegate from multicast
     ///
     /// - Parameter object: Object
     public func removeDelegate<T: CedricDelegate>(_ object: T) {
-        DispatchQueue.main.async {
-            self.delegates.removeDelegate(object)
-        }
+        delegates.removeDelegate(object)
     }
     
     /// Returns download task for state observing
@@ -181,9 +173,7 @@ public class Cedric {
         group.addAsyncOperation(operation: operation)
         
         delegates.invoke({ [task = item.task!] in
-            $0.cedric(self,
-                      didStartDownloadingResource: item.resource,
-                      withTask: task)
+            $0.cedric(self, didStartDownloadingResource: item.resource, withTask: task)
         })
     }
 }
@@ -191,58 +181,41 @@ public class Cedric {
 // MARK: - DownloadItemDelegate
 
 extension Cedric: DownloadItemDelegate {
-    
-    func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
-        
-        delegates.invoke({
-            $0.cedric(self,
-                      didCompleteWithError: error,
-                      withTask: task,
-                      whenDownloadingResource: item.resource)
-        })
-        
+    internal func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
+        delegates.invoke({ $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: item.resource) })
+        item.delegate = nil
         remove(downloadItem: item)
     }
     
-    func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask) {
+    internal func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask) {
         // single item progress report
-        delegates.invoke({
-            $0.cedric(self,
-                      didUpdateStatusOfTask: task,
-                      relatedToResource: item.resource)
-        })
+        delegates.invoke({ $0.cedric(self, didUpdateStatusOfTask: task, relatedToResource: item.resource) })
+        
+        // maybe should consider some groupped resources progress reporting ...
     }
     
     internal func item(_ item: DownloadItem, didFinishDownloadingTo location: URL) {
         do {
             let file = try DownloadedFile(absolutePath: location)
-            delegates.invoke({
-                $0.cedric(self,
-                          didFinishDownloadingResource: item.resource,
-                          toFile: file)
-            })
-            remove(downloadItem: item)
+            delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: item.resource, toFile: file) })
         } catch let error {
             delegates.invoke({ [task = item.task!] in
-                $0.cedric(self,
-                          didCompleteWithError: error,
-                          withTask: task,
-                          whenDownloadingResource: item.resource)
+                $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: item.resource)
             })
-            remove(downloadItem: item)
         }
+        
+        item.delegate = nil
+        remove(downloadItem: item)
     }
     
     fileprivate func remove(downloadItem item: DownloadItem) {
         guard let index = items.index(of: item) else { return }
         let item = items[index]
-        item.delegate = nil
+
         items.remove(at: index)
         item.releaseReferences()
         
         guard items.isEmpty else { return }
-        delegates.invoke({ $0.cedric(self,
-                                     didFinishWithMostRecentError: self.lastError)
-        })
+        delegates.invoke({ $0.cedric(self, didFinishWithMostRecentError: self.lastError) })
     }
 }

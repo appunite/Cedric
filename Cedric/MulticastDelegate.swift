@@ -11,25 +11,31 @@ import Foundation
 internal class MulticastDelegate<T> {
     
     private let delegates: NSHashTable<AnyObject>
+    private let queue: DispatchQueue
 
     internal var isEmpty: Bool {
         return delegates.count == 0
     }
     
-    internal init() {
+    internal init(delegateQueue queue: DispatchQueue) {
         delegates = NSHashTable<AnyObject>.weakObjects()
+        self.queue = queue
     }
     
     internal func addDelegate(_ delegate: T) {
-        delegates.add(delegate as AnyObject)
+        queue.async { [weak self] in 
+            self?.delegates.add(delegate as AnyObject)
+        }
     }
     
     internal func removeDelegate(_ delegate: T) {
-        delegates.remove(delegate as AnyObject)
+        queue.async { [weak self] in
+            self?.delegates.remove(delegate as AnyObject)
+        }
     }
     
     internal func invoke(_ invocation: @escaping (T) -> ()) {
-        DispatchQueue.main.async {
+        queue.async {
             for delegate in self.delegates.allObjects {
                 invocation(delegate as! T)
             }

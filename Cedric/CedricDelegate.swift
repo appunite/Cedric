@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol CedricDelegate: class {
-    /// Invoked when download did start for paricular resource
+    /// Invoked when download did start for paricular resource (download task is added to the queue)
     ///
     /// - Parameters:
     ///   - cedric: Cedric object

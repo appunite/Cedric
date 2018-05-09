@@ -23,7 +23,7 @@ internal class DownloadItem: NSObject {
     internal var completionBlock: (() -> Void)? // internal indicate that task is finished
 
     private var session: URLSession?
-    private(set) var task: URLSessionDownloadTask!
+    private(set) var task: URLSessionDownloadTask?
     private(set) var completed = false
     
     internal init(resource: DownloadResource, delegateQueue: OperationQueue?, fileManager: FileManagerType) throws {
@@ -64,7 +64,8 @@ internal class DownloadItem: NSObject {
 extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        delegate?.item(self, withTask: self.task, didCompleteWithError: error)
+        guard let task = self.task else { return }
+        delegate?.item(self, withTask: task, didCompleteWithError: error)
         session.finishTasksAndInvalidate()
         completionBlock?()
     }
@@ -81,7 +82,7 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
             completed = true
             delegate?.item(self, didFinishDownloadingTo: destination)
         } catch let error {
-            delegate?.item(self, withTask: self.task, didCompleteWithError: error)
+            delegate?.item(self, withTask: downloadTask, didCompleteWithError: error)
         }
         
         session.finishTasksAndInvalidate()
