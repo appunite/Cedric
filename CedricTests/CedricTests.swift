@@ -20,6 +20,8 @@ class CedricTests: XCTestCase {
         let newProxy = CedricDelegateProxy()
         delegate = newProxy
         sut.addDelegate(newProxy)
+        sut.cancelAllDownloads()
+        try? sut.cleanDownloadsDirectory()
     }
     
     override func tearDown() {
@@ -160,7 +162,8 @@ class CedricTests: XCTestCase {
         delegate?.didFinishDownloadingResource = { (_, file) in
             let url = try! file.url()
             XCTAssertNotNil(UIImage(contentsOfFile: url.path))
-            XCTAssertEqual(url.lastPathComponent, res.destinationName.replacingOccurrences(of: ".", with: "(1)."))
+            XCTAssertTrue(file.relativePath.contains("("))
+            XCTAssertTrue(file.relativePath.contains(")"))
             didCompleteSuccessfulySecondTime.fulfill()
         }
         

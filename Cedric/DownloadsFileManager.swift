@@ -53,6 +53,7 @@ internal class DownloadsFileManager: FileManagerType {
     
     internal func uniquePath(forName name: String) throws -> URL {
         let downloads = try downloadsDirectory(create: false)
+        
         let basePath = downloads.appendingPathComponent(name)
         let fileExtension = basePath.pathExtension
         let filenameWithoutExtension: String
