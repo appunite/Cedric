@@ -167,11 +167,11 @@ public class Cedric {
         
         group.addAsyncOperation(operation: operation)
         
-        delegates.invoke({ [weak item] in
+        delegates.invoke({ [weak item, task = item.task] in
             guard let strongItem = item else { return }
             $0.cedric(self,
                       didStartDownloadingResource: strongItem.resource,
-                      withTask: strongItem.task)
+                      withTask: task!)
         })
     }
 }
@@ -214,11 +214,11 @@ extension Cedric: DownloadItemDelegate {
             })
             remove(downloadItem: item)
         } catch let error {
-            delegates.invoke({ [weak item] in
+            delegates.invoke({ [weak item, task = item.task] in
                 guard let strongItem = item else { return }
                 $0.cedric(self,
                           didCompleteWithError: error,
-                          withTask: strongItem.task,
+                          withTask: task!,
                           whenDownloadingResource: strongItem.resource)
             })
             remove(downloadItem: item)
@@ -230,6 +230,7 @@ extension Cedric: DownloadItemDelegate {
         let item = items[index]
         item.delegate = nil
         items.remove(at: index)
+        item.releaseReferences()
         
         guard items.isEmpty else { return }
         delegates.invoke({ $0.cedric(self,

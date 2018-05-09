@@ -47,6 +47,11 @@ internal class DownloadItem: NSObject {
     internal func resume() {
         task?.resume()
     }
+    
+    internal func releaseReferences() {
+        task = nil
+        session = nil
+    }
 }
 
 extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
