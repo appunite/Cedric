@@ -16,26 +16,37 @@ public class Cedric {
     private let group: LimitedOperationGroup
     private let configuration: CedricConfiguration
     private var lastError: Error?
+    private var fileManager: FileManagerType
     
     public init(configuration: CedricConfiguration = CedricConfiguration.default) {
         self.items = []
         self.configuration = configuration
         self.group = configuration.limitedGroup()
+        self.fileManager = DownloadsFileManager()
+    }
+    
+    internal init(configuration: CedricConfiguration = CedricConfiguration.default, fileManager: FileManagerType = DownloadsFileManager()) {
+        self.items = []
+        self.configuration = configuration
+        self.group = configuration.limitedGroup()
+        self.fileManager = fileManager
     }
     
     /// Schedule multiple downloads
     ///
     /// - Parameter resources: Resources to download
-    public func enqueueMultipleDownloads(forResources resources: [DownloadResource]) {
-        resources.forEach { enqueueDownload(forResource: $0) }
+    public func enqueueMultipleDownloads(forResources resources: [DownloadResource]) throws {
+        try resources.forEach { try enqueueDownload(forResource: $0) }
     }
     
     /// Add new download to Cedric's queue
     ///
     /// - Parameter resouce: resource to be downloaded
-    public func enqueueDownload(forResource resource: DownloadResource) {
+    public func enqueueDownload(forResource resource: DownloadResource) throws {
         cleanQueueStatisticsIfNeeded()
-        let item = DownloadItem(resource: resource, delegateQueue: configuration.queue)
+        let item = try DownloadItem(resource: resource,
+                                delegateQueue: configuration.queue,
+                                fileManager: fileManager)
         
         switch resource.mode {
         case .newFile:
@@ -61,20 +72,22 @@ public class Cedric {
     /// - Parameter id: identifier of resource to be cancel (please not that there might be multiple resources with the same identifier, all of them will be canceled)
     public func cancel(downloadingResourcesWithId id: String) {
         items.filter { $0.resource.id == id }
-            .filter { $0.completed == false }
             .forEach {
-                $0.cancel()
+                if $0.completed == false {
+                    $0.cancel()
+                }
                 remove(downloadItem: $0)
             }
     }
     
     /// Cancel all running downloads
     public func cancelAllDownloads() {
-        items.filter { $0.completed == false }
-            .forEach {
+        items.forEach {
+            if $0.completed == false {
                 $0.cancel()
-                remove(downloadItem: $0)
             }
+            remove(downloadItem: $0)
+        }
     }
     
     /// Insert new delegate for multicast
@@ -167,11 +180,10 @@ public class Cedric {
         
         group.addAsyncOperation(operation: operation)
         
-        delegates.invoke({ [weak item, task = item.task] in
-            guard let strongItem = item else { return }
+        delegates.invoke({ [task = item.task!] in
             $0.cedric(self,
-                      didStartDownloadingResource: strongItem.resource,
-                      withTask: task!)
+                      didStartDownloadingResource: item.resource,
+                      withTask: task)
         })
     }
 }
@@ -182,12 +194,11 @@ extension Cedric: DownloadItemDelegate {
     
     func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
         
-        delegates.invoke({ [weak item] in
-            guard let strongItem = item else { return }
+        delegates.invoke({
             $0.cedric(self,
                       didCompleteWithError: error,
                       withTask: task,
-                      whenDownloadingResource: strongItem.resource)
+                      whenDownloadingResource: item.resource)
         })
         
         remove(downloadItem: item)
@@ -195,31 +206,28 @@ extension Cedric: DownloadItemDelegate {
     
     func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask) {
         // single item progress report
-        delegates.invoke({ [weak item] in
-            guard let strongItem = item else { return }
+        delegates.invoke({
             $0.cedric(self,
                       didUpdateStatusOfTask: task,
-                      relatedToResource: strongItem.resource)
+                      relatedToResource: item.resource)
         })
     }
     
     internal func item(_ item: DownloadItem, didFinishDownloadingTo location: URL) {
         do {
             let file = try DownloadedFile(absolutePath: location)
-            delegates.invoke({ [weak item] in
-                guard let strongItem = item else { return }
+            delegates.invoke({
                 $0.cedric(self,
-                          didFinishDownloadingResource: strongItem.resource,
+                          didFinishDownloadingResource: item.resource,
                           toFile: file)
             })
             remove(downloadItem: item)
         } catch let error {
-            delegates.invoke({ [weak item, task = item.task] in
-                guard let strongItem = item else { return }
+            delegates.invoke({ [task = item.task!] in
                 $0.cedric(self,
                           didCompleteWithError: error,
-                          withTask: task!,
-                          whenDownloadingResource: strongItem.resource)
+                          withTask: task,
+                          whenDownloadingResource: item.resource)
             })
             remove(downloadItem: item)
         }

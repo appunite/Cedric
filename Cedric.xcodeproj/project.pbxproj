@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD423AD820A37C00003C3E99 /* DownloadsFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD423AD720A37C00003C3E99 /* DownloadsFileManager.swift */; };
 		AD5EAD25209F6D9400AEB97E /* Cedric.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5EAD23209F6D9400AEB97E /* Cedric.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1713209F6E3D0033FA7B /* Cedric.swift */; };
 		ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AD423AD720A37C00003C3E99 /* DownloadsFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadsFileManager.swift; sourceTree = "<group>"; };
 		AD5EAD20209F6D9400AEB97E /* Cedric.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cedric.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD5EAD23209F6D9400AEB97E /* Cedric.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cedric.h; sourceTree = "<group>"; };
 		AD5EAD24209F6D9400AEB97E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				AD5EAD23209F6D9400AEB97E /* Cedric.h */,
 				AD5EAD24209F6D9400AEB97E /* Info.plist */,
 				ADAC1713209F6E3D0033FA7B /* Cedric.swift */,
+				AD423AD720A37C00003C3E99 /* DownloadsFileManager.swift */,
 				ADD61E8320A2D4B400616745 /* CedricDelegate.swift */,
 				ADD61E8120A25A5F00616745 /* CedricConfiguration.swift */,
 				ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */,
@@ -256,6 +259,7 @@
 			files = (
 				ADAC173020A0809E0033FA7B /* DownloadedFile.swift in Sources */,
 				ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */,
+				AD423AD820A37C00003C3E99 /* DownloadsFileManager.swift in Sources */,
 				ADD61E8020A25A4000616745 /* LimitedOperationGroup.swift in Sources */,
 				ADD61E8220A25A5F00616745 /* CedricConfiguration.swift in Sources */,
 				ADD61E8420A2D4B400616745 /* CedricDelegate.swift in Sources */,

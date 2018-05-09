@@ -16,7 +16,7 @@ public struct DownloadResource {
     public let id: String
     
     /// Source from which file will be downloaded
-    public let source: URL
+    public let source: URL?
     
     /// Preferred destination name (might be different if using `newFile` mode)
     public let destinationName: String
@@ -27,7 +27,7 @@ public struct DownloadResource {
     /// Attributes applied to downloaded file
     public let attributes: [FileAttributeKey: Any]?
     
-    public init(id: String, source: URL, destinationName: String, mode: DownloadMode = .notDownloadIfExists, attributes: [FileAttributeKey: Any]? = nil) {
+    public init(id: String, source: URL?, destinationName: String, mode: DownloadMode = .notDownloadIfExists, attributes: [FileAttributeKey: Any]? = nil) {
         self.id = id
         self.source = source
         self.destinationName = destinationName

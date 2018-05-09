@@ -68,7 +68,7 @@ class CedricTests: XCTestCase {
             didCompleteSuccessfuly.fulfill()
         }
         
-        sut.enqueueDownload(forResource: resource)
+        XCTAssertNoThrow(try sut.enqueueDownload(forResource: resource))
         wait(for: [didStartExpectation, didReportProgress, didCompleteSuccessfuly], timeout: 20.0, enforceOrder: true)
     }
     
@@ -90,7 +90,7 @@ class CedricTests: XCTestCase {
             didCompleteExpectations[index].fulfill()
         }
         
-        sut.enqueueMultipleDownloads(forResources: sources)
+        XCTAssertNoThrow(try sut.enqueueMultipleDownloads(forResources: sources))
         wait(for: didStartExpectations + didCompleteExpectations, timeout: 20.0, enforceOrder: false)
     }
     
@@ -113,7 +113,7 @@ class CedricTests: XCTestCase {
             didCompleteSuccessfulyFirstTime.fulfill()
         }
         
-        sut.enqueueDownload(forResource: resource)
+        XCTAssertNoThrow(try sut.enqueueDownload(forResource: resource))
         wait(for: [didCompleteSuccessfulyFirstTime], timeout: 20.0, enforceOrder: true)
         
         delegate?.didStartDownloadingResource = { _ in
@@ -127,7 +127,7 @@ class CedricTests: XCTestCase {
             didCompleteSuccessfulySecondTime.fulfill()
         }
 
-        sut.enqueueDownload(forResource: resource)
+        XCTAssertNoThrow(try sut.enqueueDownload(forResource: resource))
         wait(for: [didNotStartDownloadingSecondTime, didCompleteSuccessfulySecondTime], timeout: 3.0, enforceOrder: false)
     }
     
@@ -150,7 +150,7 @@ class CedricTests: XCTestCase {
             didCompleteSuccessfulyFirstTime.fulfill()
         }
         
-        sut.enqueueDownload(forResource: resource)
+        XCTAssertNoThrow(try sut.enqueueDownload(forResource: resource))
         wait(for: [didCompleteSuccessfulyFirstTime], timeout: 20.0, enforceOrder: true)
         
         delegate?.didStartDownloadingResource = { _ in
@@ -164,7 +164,7 @@ class CedricTests: XCTestCase {
             didCompleteSuccessfulySecondTime.fulfill()
         }
         
-        sut.enqueueDownload(forResource: resource)
+        XCTAssertNoThrow(try sut.enqueueDownload(forResource: resource))
         wait(for: [didStartForSecondTime, didCompleteSuccessfulySecondTime], timeout: 20.0, enforceOrder: true)
     }
     
@@ -183,7 +183,7 @@ class CedricTests: XCTestCase {
             didComplete.fulfill()
         }
         
-        sut.enqueueDownload(forResource: resource)
+        XCTAssertNoThrow(try sut.enqueueDownload(forResource: resource))
         sut.cancelAllDownloads()
         
         wait(for: [didComplete], timeout: 7.0, enforceOrder: true)
@@ -236,8 +236,7 @@ class CedricTests: XCTestCase {
             didCompleteExpectations[index].fulfill()
         }
         
-        sut.enqueueMultipleDownloads(forResources: resources)
-    
+        XCTAssertNoThrow(try sut.enqueueMultipleDownloads(forResources: resources))
         wait(for: didCompleteExpectations, timeout: 20.0, enforceOrder: true)
     }
     
@@ -259,8 +258,7 @@ class CedricTests: XCTestCase {
             didNotifyAboutQueueFinishing.fulfill()
         }
         
-        sut.enqueueMultipleDownloads(forResources: resources)
-        
+        XCTAssertNoThrow(try sut.enqueueMultipleDownloads(forResources: resources))
         wait(for: [didNotifyAboutQueueFinishing], timeout: 20.0)
     }
     
@@ -296,8 +294,15 @@ class CedricTests: XCTestCase {
             didRemoveFile.fulfill()
         }
         
-        sut.enqueueDownload(forResource: resource)
+        XCTAssertNoThrow(try sut.enqueueDownload(forResource: resource))
         wait(for: [didCompleteSuccessfuly, didRemoveFile], timeout: 20.0, enforceOrder: true)
+    }
+    
+    func testThrowingEnqueueError() {
+        let invalidResources = [
+            DownloadResource(id: "1", source: nil, destinationName: "destination")
+        ]
+        XCTAssertThrowsError(try sut.enqueueMultipleDownloads(forResources: invalidResources))
     }
 }
 

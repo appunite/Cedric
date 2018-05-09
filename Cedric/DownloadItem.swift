@@ -14,18 +14,25 @@ internal protocol DownloadItemDelegate: class {
     func item(_ item: DownloadItem, didFinishDownloadingTo location: URL)
 }
 
+public enum DownloadError: Error {
+    case missingURL
+}
+
 internal class DownloadItem: NSObject {
     
     internal let resource: DownloadResource
     internal weak var delegate: DownloadItemDelegate?
-    internal var completionBlock: (() -> Void)? // indicate that task is finished
+    internal weak var fileManager: FileManagerType!
+    
+    internal var completionBlock: (() -> Void)? // internal indicate that task is finished
 
     private var session: URLSession?
     private(set) var task: URLSessionDownloadTask!
     private(set) var completed = false
     
-    internal init(resource: DownloadResource, delegateQueue: OperationQueue?) {
+    internal init(resource: DownloadResource, delegateQueue: OperationQueue?, fileManager: FileManagerType) throws {
         self.resource = resource
+        self.fileManager = fileManager
         
         super.init()
 
@@ -33,7 +40,11 @@ internal class DownloadItem: NSObject {
         
         self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: delegateQueue)
     
-        let task = session?.downloadTask(with: resource.source)
+        guard let downloadUrl = resource.source else {
+            throw DownloadError.missingURL
+        }
+        
+        let task = session?.downloadTask(with: downloadUrl)
         task?.taskDescription = resource.id
         self.task = task
     }
@@ -63,17 +74,14 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        delegate?.item(self, didUpdateStatusOfTask: self.task)
+        delegate?.item(self, didUpdateStatusOfTask: downloadTask)
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
         do {
             let destination = try path(forResource: resource)
-            try FileManager.default.moveItem(at: location, to: destination)
-            if let attributes = resource.attributes {
-                try FileManager.default.setAttributes(attributes, ofItemAtPath: destination.path)
-            }
+            try fileManager.move(fromPath: location, toPath: destination, resource: resource)
             completed = true
             delegate?.item(self, didFinishDownloadingTo: destination)
         } catch let error {
@@ -85,45 +93,12 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
     }
     
     private func path(forResource resource: DownloadResource) throws -> URL {
-        
-        let downloads = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("Downloads")
-        
-        var isDir: ObjCBool = true
-        
-        if FileManager.default.fileExists(atPath: downloads.path, isDirectory: &isDir) == false {
-            try FileManager.default.createDirectory(at: downloads, withIntermediateDirectories: true, attributes: nil)
-        }
-
         switch resource.mode {
         case .newFile:
-            return uniquePath(forFilename: resource.destinationName, inDownloadDirectory: downloads)
+            return try fileManager.createUrl(forName: resource.destinationName, unique: true)
         case .notDownloadIfExists:
-            return downloads.appendingPathComponent(resource.destinationName)
+            return try fileManager.createUrl(forName: resource.destinationName, unique: false)
         }
-    }
-    
-    private func uniquePath(forFilename filename: String, inDownloadDirectory downloads: URL) -> URL {
-        let basePath = downloads.appendingPathComponent(resource.destinationName)
-        let fileExtension = basePath.pathExtension
-        let filenameWithoutExtension: String
-        if fileExtension.count > 0 {
-            filenameWithoutExtension = String(filename.dropLast(fileExtension.count + 1))
-        } else {
-            filenameWithoutExtension = filename
-        }
-        
-        var destinationPath = basePath
-        var existing = 0
-        
-        while FileManager.default.fileExists(atPath: destinationPath.path) {
-            existing += 1
-            
-            let newFilenameWithoutExtension = "\(filenameWithoutExtension)(\(existing))"
-            destinationPath = downloads.appendingPathComponent(newFilenameWithoutExtension).appendingPathExtension(fileExtension)
-        }
-        
-        return destinationPath
     }
 }
 

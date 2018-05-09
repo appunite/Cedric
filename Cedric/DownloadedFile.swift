@@ -15,7 +15,8 @@ public struct DownloadedFile {
     
     /// Getter for url of file
     public func url() throws -> URL {
-        return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(relativePath)
+        return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            .appendingPathComponent(relativePath)
     }
     
     internal init(absolutePath path: URL) throws {
@@ -32,10 +33,7 @@ public struct DownloadedFile {
     /// - Parameter fileName: Preferred filename
     /// - Returns: URL if file with particular name exists in downloads directory
     public static func url(forPreferredFileName fileName: String) -> URL? {
-        let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("Downloads")
-            .appendingPathComponent(fileName)
-        
+        let url = try? DownloadsFileManager().downloadsDirectory().appendingPathComponent(fileName)
         guard let unwrappedUrl = url, FileManager.default.fileExists(atPath: unwrappedUrl.path) else { return nil }
         return unwrappedUrl
     }
