@@ -64,8 +64,7 @@ internal class DownloadItem: NSObject {
 extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        guard let task = self.task else { return }
-        delegate?.item(self, withTask: task, didCompleteWithError: error)
+        delegate?.item(self, withTask: task as! URLSessionDownloadTask, didCompleteWithError: error)
         session.finishTasksAndInvalidate()
         completionBlock?()
     }
@@ -95,19 +94,6 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
             return try fileManager.createUrl(forName: resource.destinationName, unique: true)
         case .notDownloadIfExists:
             return try fileManager.createUrl(forName: resource.destinationName, unique: false)
-        }
-    }
-}
-
-// Debugging helper
-
-internal extension URLSessionDownloadTask.State {
-    var description: String {
-        switch self {
-        case .canceling: return "Canceling"
-        case .completed: return "Completed"
-        case .running: return "Running"
-        case .suspended: return "Suspended"
         }
     }
 }

@@ -304,6 +304,54 @@ class CedricTests: XCTestCase {
         ]
         XCTAssertThrowsError(try sut.enqueueMultipleDownloads(forResources: invalidResources))
     }
+    
+    func testCancelWithId() {
+        guard let resource = resources.first else {
+            XCTFail("No resource to download")
+            return
+        }
+        
+        let didComplete = expectation(description: "Did not call complete successfully")
+        didComplete.isInverted = true
+        
+        delegate?.didFinishDownloadingResource = { (_, _) in
+            // should not be fulfilled
+            didComplete.fulfill()
+        }
+        
+        XCTAssertNoThrow(try sut.enqueueDownload(forResource: resource))
+        sut.cancel(downloadingResourcesWithId: resource.id)
+        
+        wait(for: [didComplete], timeout: 7.0, enforceOrder: true)
+    }
+    
+    func testGettingDownloadTaskSuccessfuly() {
+        XCTAssertNoThrow(try sut.enqueueMultipleDownloads(forResources: resources))
+        
+        guard let resource = resources.first else {
+            XCTFail("No resource to download")
+            return
+        }
+
+        XCTAssertNotNil(sut.downloadTask(forResourceWithId: resource.id))
+        XCTAssertNotNil(sut.downloadTask(forResource: resource))
+    }
+    
+    func testGettingTaskWhenNil() {
+        XCTAssertNil(sut.downloadTask(forResource: DownloadResource(id: "not-existing", source: nil, destinationName: "")))
+        XCTAssertNil(sut.downloadTask(forResourceWithId: "some-non-existing-identifier"))
+    }
+    
+    func testIsDownloadingTrue() {
+        XCTAssertNoThrow(try sut.enqueueMultipleDownloads(forResources: resources))
+        XCTAssertTrue(sut.isDownloading(resourceWithId: resources[0].id))
+    }
+    
+    func testIsDownloadingFalse()  {
+        XCTAssertNoThrow(try sut.enqueueMultipleDownloads(forResources: resources))
+        XCTAssertFalse(sut.isDownloading(resourceWithId: "non-existing-id"))
+    }
+
 }
 
 class CedricDelegateProxy: CedricDelegate {
