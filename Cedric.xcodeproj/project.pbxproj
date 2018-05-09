@@ -10,6 +10,7 @@
 		AD423AD820A37C00003C3E99 /* DownloadsFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD423AD720A37C00003C3E99 /* DownloadsFileManager.swift */; };
 		AD5EAD25209F6D9400AEB97E /* Cedric.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5EAD23209F6D9400AEB97E /* Cedric.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ADA1DFA120A390C7000522A2 /* DownloadError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFA020A390C7000522A2 /* DownloadError.swift */; };
+		ADA1DFA320A3A256000522A2 /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFA220A3A256000522A2 /* FileManagerExtensions.swift */; };
 		ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1713209F6E3D0033FA7B /* Cedric.swift */; };
 		ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */; };
 		ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC171A20A031080033FA7B /* DownloadResource.swift */; };
@@ -45,6 +46,7 @@
 		AD5EAD23209F6D9400AEB97E /* Cedric.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cedric.h; sourceTree = "<group>"; };
 		AD5EAD24209F6D9400AEB97E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADA1DFA020A390C7000522A2 /* DownloadError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadError.swift; sourceTree = "<group>"; };
+		ADA1DFA220A3A256000522A2 /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
 		ADAC1713209F6E3D0033FA7B /* Cedric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cedric.swift; sourceTree = "<group>"; };
 		ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
 		ADAC171A20A031080033FA7B /* DownloadResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadResource.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		AD5EAD16209F6D9400AEB97E = {
 			isa = PBXGroup;
 			children = (
+				ADA1DFA220A3A256000522A2 /* FileManagerExtensions.swift */,
 				AD5EAD22209F6D9400AEB97E /* Cedric */,
 				ADAC172320A034A90033FA7B /* CedricTests */,
 				AD5EAD21209F6D9400AEB97E /* Products */,
@@ -268,6 +271,7 @@
 				ADD61E8220A25A5F00616745 /* CedricConfiguration.swift in Sources */,
 				ADD61E8420A2D4B400616745 /* CedricDelegate.swift in Sources */,
 				ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */,
+				ADA1DFA320A3A256000522A2 /* FileManagerExtensions.swift in Sources */,
 				ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */,
 				ADAC171D20A031B50033FA7B /* MulticastDelegate.swift in Sources */,
 			);
