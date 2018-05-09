@@ -72,7 +72,7 @@ public class Cedric {
         items.filter { $0.resource.id == id }
             .forEach {
                 $0.delegate = nil
-                if !$0.completed { $0.cancel() }
+                $0.cancel()
                 remove(downloadItem: $0)
             }
     }
@@ -81,7 +81,7 @@ public class Cedric {
     public func cancelAllDownloads() {
         items.forEach {
             $0.delegate = nil
-            if !$0.completed { $0.cancel() }
+            $0.cancel()
             remove(downloadItem: $0)
         }
     }
