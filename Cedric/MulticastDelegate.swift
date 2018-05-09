@@ -28,9 +28,11 @@ internal class MulticastDelegate<T> {
         delegates.remove(delegate as AnyObject)
     }
     
-    internal func invoke(_ invocation: (T) -> ()) {
-        for delegate in delegates.allObjects {
-            invocation(delegate as! T)
+    internal func invoke(_ invocation: @escaping (T) -> ()) {
+        DispatchQueue.main.async {
+            for delegate in self.delegates.allObjects {
+                invocation(delegate as! T)
+            }
         }
     }
 }

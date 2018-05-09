@@ -42,9 +42,10 @@ public class Cedric {
             items.append(item)
         case .notDownloadIfExists:
             if let existing = existingFileIfAvailable(forResource: resource) {
-                DispatchQueue.main.async {
-                    self.delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: resource, toFile: existing) })
-                }
+                delegates.invoke({ $0.cedric(self,
+                                             didFinishDownloadingResource: resource,
+                                             toFile: existing)
+                })
                 return
             } else {
                 guard items.contains(where: { $0.resource.id == resource.id }) == false else { return } 
@@ -98,13 +99,17 @@ public class Cedric {
 
     /// Remove all files downloaded by Cedric
     ///
-    /// - Throws: Exception occured while removing files
+    /// - Throws: Exceptions occured while removing files
     public func cleanDownloadsDirectory() throws {
         let documents = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Downloads")
         let content = try FileManager.default.contentsOfDirectory(atPath: documents.path)
         try content.forEach({ try FileManager.default.removeItem(atPath: "\(documents.path)/\($0)")})
     }
     
+    /// Remove particular file
+    ///
+    /// - Parameter file: File to remove
+    /// - Throws: Exceptions occured while removing file
     public func remove(downloadedFile file: DownloadedFile) throws {
         let url = try file.url()
         try FileManager.default.removeItem(at: url)
@@ -126,18 +131,21 @@ public class Cedric {
     private func createAndScheduleOperation(forItem item: DownloadItem) {
         item.delegate = self
         
-        let operation = BlockOperation(block: { [weak self] in
+        let operation = BlockOperation(block: { [weak item, weak self] in
+            guard let `self` = self, let strongItem = item else { return }
+            
             let semaphore = DispatchSemaphore(value: 0)
             
-            DispatchQueue.main.async {
-                guard let `self` = self else { return }
-                self.delegates.invoke({ $0.cedric(self, didStartDownloadingResource: item.resource, withTask: item.task) })
-            }
+            self.delegates.invoke({ $0.cedric(self,
+                                               didStartDownloadingResource: strongItem.resource,
+                                               withTask: strongItem.task)
+            })
             
-            item.completionBlock = {
+            strongItem.completionBlock = {
                 semaphore.signal()
             }
-            item.resume()
+            
+            strongItem.resume()
             semaphore.wait()
         })
         
@@ -150,31 +158,38 @@ public class Cedric {
 extension Cedric: DownloadItemDelegate {
     
     func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
-        DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: item.resource) })
-            self.remove(downloadItem: item)
-        }
+        
+        delegates.invoke({ $0.cedric(self,
+                                     didCompleteWithError: error,
+                                     withTask: task,
+                                     whenDownloadingResource: item.resource)
+        })
+        
+        remove(downloadItem: item)
     }
     
     func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask) {
         // single item progress report
-        
-        DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didUpdateStatusOfTask: task, relatedToResource: item.resource) })
-        }
+        delegates.invoke({ $0.cedric(self,
+                                     didUpdateStatusOfTask: task,
+                                     relatedToResource: item.resource)
+        })
     }
     
     internal func item(_ item: DownloadItem, didFinishDownloadingTo location: URL) {
         do {
             let file = try DownloadedFile(absolutePath: location)
-            DispatchQueue.main.async {
-                self.delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: item.resource, toFile: file) })
-            }
+            delegates.invoke({ $0.cedric(self,
+                                         didFinishDownloadingResource: item.resource,
+                                         toFile: file)
+            })
             remove(downloadItem: item)
         } catch let error {
-            DispatchQueue.main.async {
-                self.delegates.invoke({ $0.cedric(self, didCompleteWithError: error, withTask: item.task, whenDownloadingResource: item.resource) })
-            }
+            delegates.invoke({ $0.cedric(self,
+                                         didCompleteWithError: error,
+                                         withTask: item.task,
+                                         whenDownloadingResource: item.resource)
+            })
             remove(downloadItem: item)
         }
     }
@@ -186,8 +201,8 @@ extension Cedric: DownloadItemDelegate {
         items.remove(at: index)
         
         guard items.isEmpty else { return }
-        DispatchQueue.main.async {
-            self.delegates.invoke({ $0.cedric(self, didFinishWithMostRecentError: self.lastError)})
-        }
+        delegates.invoke({ $0.cedric(self,
+                                     didFinishWithMostRecentError: self.lastError)
+        })
     }
 }
