@@ -146,25 +146,25 @@ public class Cedric {
     private func createAndScheduleOperation(forItem item: DownloadItem) {
         item.delegate = self
         
-        let operation = BlockOperation(block: { [weak item, weak self] in
-            guard let `self` = self, let strongItem = item else { return }
+        let operation = BlockOperation(block: { [weak item] in
+            guard let strongItem = item else { return }
             
             let semaphore = DispatchSemaphore(value: 0)
-            
-            self.delegates.invoke({ $0.cedric(self,
-                                               didStartDownloadingResource: strongItem.resource,
-                                               withTask: strongItem.task)
-            })
             
             strongItem.completionBlock = {
                 semaphore.signal()
             }
-            
+
             strongItem.resume()
             semaphore.wait()
         })
         
         group.addAsyncOperation(operation: operation)
+        
+        delegates.invoke({ $0.cedric(self,
+                                     didStartDownloadingResource: item.resource,
+                                     withTask: item.task)
+        })
     }
 }
 

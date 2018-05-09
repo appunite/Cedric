@@ -118,3 +118,16 @@ extension DownloadItem: URLSessionTaskDelegate, URLSessionDownloadDelegate {
         return destinationPath
     }
 }
+
+// Debugging helper
+
+internal extension URLSessionDownloadTask.State {
+    var description: String {
+        switch self {
+        case .canceling: return "Canceling"
+        case .completed: return "Completed"
+        case .running: return "Running"
+        case .suspended: return "Suspended"
+        }
+    }
+}
