@@ -11,6 +11,13 @@
 		AD5EAD25209F6D9400AEB97E /* Cedric.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5EAD23209F6D9400AEB97E /* Cedric.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ADA1DFA120A390C7000522A2 /* DownloadError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFA020A390C7000522A2 /* DownloadError.swift */; };
 		ADA1DFA720A456D0000522A2 /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFA620A456D0000522A2 /* FileManagerExtensions.swift */; };
+		ADA1DFAF20A4580B000522A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFAE20A4580B000522A2 /* AppDelegate.swift */; };
+		ADA1DFB120A4580B000522A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFB020A4580B000522A2 /* ViewController.swift */; };
+		ADA1DFB420A4580B000522A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADA1DFB220A4580B000522A2 /* Main.storyboard */; };
+		ADA1DFB620A4580F000522A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADA1DFB520A4580F000522A2 /* Assets.xcassets */; };
+		ADA1DFB920A4580F000522A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADA1DFB720A4580F000522A2 /* LaunchScreen.storyboard */; };
+		ADA1DFBF20A459F1000522A2 /* DownloadPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFBE20A459F1000522A2 /* DownloadPreviewTableViewCell.swift */; };
+		ADA1DFC120A45A2C000522A2 /* Cedric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5EAD20209F6D9400AEB97E /* Cedric.framework */; };
 		ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1713209F6E3D0033FA7B /* Cedric.swift */; };
 		ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */; };
 		ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC171A20A031080033FA7B /* DownloadResource.swift */; };
@@ -47,6 +54,14 @@
 		AD5EAD24209F6D9400AEB97E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADA1DFA020A390C7000522A2 /* DownloadError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadError.swift; sourceTree = "<group>"; };
 		ADA1DFA620A456D0000522A2 /* FileManagerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
+		ADA1DFAC20A4580B000522A2 /* CedricExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CedricExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADA1DFAE20A4580B000522A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		ADA1DFB020A4580B000522A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ADA1DFB320A4580B000522A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		ADA1DFB520A4580F000522A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ADA1DFB820A4580F000522A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		ADA1DFBA20A4580F000522A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADA1DFBE20A459F1000522A2 /* DownloadPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		ADAC1713209F6E3D0033FA7B /* Cedric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cedric.swift; sourceTree = "<group>"; };
 		ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
 		ADAC171A20A031080033FA7B /* DownloadResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadResource.swift; sourceTree = "<group>"; };
@@ -75,6 +90,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADA1DFA920A4580B000522A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADA1DFC120A45A2C000522A2 /* Cedric.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADAC171F20A034A90033FA7B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -91,7 +114,9 @@
 			children = (
 				AD5EAD22209F6D9400AEB97E /* Cedric */,
 				ADAC172320A034A90033FA7B /* CedricTests */,
+				ADA1DFAD20A4580B000522A2 /* CedricExample */,
 				AD5EAD21209F6D9400AEB97E /* Products */,
+				ADA1DFC020A45A2C000522A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +125,7 @@
 			children = (
 				AD5EAD20209F6D9400AEB97E /* Cedric.framework */,
 				ADAC172220A034A90033FA7B /* CedricTests.xctest */,
+				ADA1DFAC20A4580B000522A2 /* CedricExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,6 +148,27 @@
 				ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */,
 			);
 			path = Cedric;
+			sourceTree = "<group>";
+		};
+		ADA1DFAD20A4580B000522A2 /* CedricExample */ = {
+			isa = PBXGroup;
+			children = (
+				ADA1DFAE20A4580B000522A2 /* AppDelegate.swift */,
+				ADA1DFB020A4580B000522A2 /* ViewController.swift */,
+				ADA1DFB220A4580B000522A2 /* Main.storyboard */,
+				ADA1DFB520A4580F000522A2 /* Assets.xcassets */,
+				ADA1DFB720A4580F000522A2 /* LaunchScreen.storyboard */,
+				ADA1DFBA20A4580F000522A2 /* Info.plist */,
+				ADA1DFBE20A459F1000522A2 /* DownloadPreviewTableViewCell.swift */,
+			);
+			path = CedricExample;
+			sourceTree = "<group>";
+		};
+		ADA1DFC020A45A2C000522A2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		ADAC172320A034A90033FA7B /* CedricTests */ = {
@@ -180,6 +227,23 @@
 			productReference = AD5EAD20209F6D9400AEB97E /* Cedric.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		ADA1DFAB20A4580B000522A2 /* CedricExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADA1DFBB20A4580F000522A2 /* Build configuration list for PBXNativeTarget "CedricExample" */;
+			buildPhases = (
+				ADA1DFA820A4580B000522A2 /* Sources */,
+				ADA1DFA920A4580B000522A2 /* Frameworks */,
+				ADA1DFAA20A4580B000522A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CedricExample;
+			productName = CedricExample;
+			productReference = ADA1DFAC20A4580B000522A2 /* CedricExample.app */;
+			productType = "com.apple.product-type.application";
+		};
 		ADAC172120A034A90033FA7B /* CedricTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADAC172A20A034A90033FA7B /* Build configuration list for PBXNativeTarget "CedricTests" */;
@@ -212,6 +276,9 @@
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 0930;
 					};
+					ADA1DFAB20A4580B000522A2 = {
+						CreatedOnToolsVersion = 9.3;
+					};
 					ADAC172120A034A90033FA7B = {
 						CreatedOnToolsVersion = 9.3;
 					};
@@ -223,6 +290,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = AD5EAD16209F6D9400AEB97E;
 			productRefGroup = AD5EAD21209F6D9400AEB97E /* Products */;
@@ -231,6 +299,7 @@
 			targets = (
 				AD5EAD1F209F6D9400AEB97E /* Cedric */,
 				ADAC172120A034A90033FA7B /* CedricTests */,
+				ADA1DFAB20A4580B000522A2 /* CedricExample */,
 			);
 		};
 /* End PBXProject section */
@@ -240,6 +309,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADA1DFAA20A4580B000522A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADA1DFB920A4580F000522A2 /* LaunchScreen.storyboard in Resources */,
+				ADA1DFB620A4580F000522A2 /* Assets.xcassets in Resources */,
+				ADA1DFB420A4580B000522A2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +356,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADA1DFA820A4580B000522A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADA1DFB120A4580B000522A2 /* ViewController.swift in Sources */,
+				ADA1DFBF20A459F1000522A2 /* DownloadPreviewTableViewCell.swift in Sources */,
+				ADA1DFAF20A4580B000522A2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADAC171E20A034A90033FA7B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -295,6 +384,25 @@
 			targetProxy = ADAC172820A034A90033FA7B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		ADA1DFB220A4580B000522A2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADA1DFB320A4580B000522A2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		ADA1DFB720A4580F000522A2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADA1DFB820A4580F000522A2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		AD5EAD26209F6D9400AEB97E /* Debug */ = {
@@ -470,6 +578,40 @@
 			};
 			name = Release;
 		};
+		ADA1DFBC20A4580F000522A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = CedricExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.AppUnite.CedricExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ADA1DFBD20A4580F000522A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = CedricExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.AppUnite.CedricExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		ADAC172B20A034A90033FA7B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -521,6 +663,15 @@
 			buildConfigurations = (
 				AD5EAD29209F6D9400AEB97E /* Debug */,
 				AD5EAD2A209F6D9400AEB97E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADA1DFBB20A4580F000522A2 /* Build configuration list for PBXNativeTarget "CedricExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADA1DFBC20A4580F000522A2 /* Debug */,
+				ADA1DFBD20A4580F000522A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
