@@ -27,7 +27,7 @@ class ViewController: UITableViewController {
     ]
     
     lazy var cedric: Cedric = {
-        let configuration = CedricConfiguration(mode: .serial)
+        let configuration = CedricConfiguration(mode: .parallel(max: 3))
         return Cedric(configuration: configuration)
     }()
     
