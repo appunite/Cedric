@@ -149,6 +149,14 @@ public class Cedric {
         return try? DownloadedFile(absolutePath: unwrappedUrl)
     }
     
+    /// Return active tasks
+    ///
+    /// - Returns: Currently under operation tasks
+    public func getActiveTasks() -> [URLSessionDownloadTask] {
+        return items.map{ $0.task }
+            .compactMap { $0 }
+    }
+    
     private func cleanQueueStatisticsIfNeeded() {
         guard items.isEmpty else { return }
         lastError = nil
