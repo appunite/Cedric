@@ -26,39 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AD5EAD1F209F6D9400AEB97E"
-            BuildableName = "Cedric.framework"
-            BlueprintName = "Cedric"
-            ReferencedContainer = "container:Cedric.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ADAC172120A034A90033FA7B"
-               BuildableName = "CedricTests.xctest"
-               BlueprintName = "CedricTests"
-               ReferencedContainer = "container:Cedric.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AD5EAD1F209F6D9400AEB97E"
-            BuildableName = "Cedric.framework"
-            BlueprintName = "Cedric"
-            ReferencedContainer = "container:Cedric.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

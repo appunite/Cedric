@@ -531,6 +531,7 @@
 		};
 		AD5EAD29209F6D9400AEB97E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD6651B220A4C613009FF7AB /* Cedric.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -550,7 +551,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.AppUnite.Cedric;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos macosx iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -559,6 +560,7 @@
 		};
 		AD5EAD2A209F6D9400AEB97E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD6651B220A4C613009FF7AB /* Cedric.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";

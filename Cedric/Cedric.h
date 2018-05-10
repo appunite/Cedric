@@ -6,7 +6,7 @@
 //  Copyright © 2018 AppUnite. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for Cedric.
 FOUNDATION_EXPORT double CedricVersionNumber;
