@@ -42,7 +42,7 @@ let configuration = CedricConfiguration(mode: .serial)
 return Cedric(configuration: configuration)
 ```
 
-![gif](Resources/cedric-serial.gif)
+<img src="Resources/cedric-serial.gif" width="300" height="500" />
 
 Using parallel mode (with concurent 3 tasks): 
 
@@ -51,7 +51,7 @@ let configuration = CedricConfiguration(mode: .parallel(max: 3))
 return Cedric(configuration: configuration)
 ```
 
-![gif](Resources/cedric-parallel.gif)
+<img src="Resources/cedric-parallel.gif" width="300" height="500" />
 
 ### Carthage
 
