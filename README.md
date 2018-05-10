@@ -21,13 +21,13 @@ let resource = DownloadResource(id: asset.id, source: asset.url, destinationName
 try cedric.enqueueDownload(forResource: resource) 
 
 func cedric(_ cedric: Cedric, didFinishDownloadingResource resource: DownloadResource, toFile file: DownloadedFile) {
-	do { 
-		let url = try file.url()
-		guard let image = UIImage(contentsOfFile: url.path) else { return }	
-		fileImageView.image = image
-	} catch let error {
-		...
-	}
+   do { 
+      let url = try file.url()
+      guard let image = UIImage(contentsOfFile: url.path) else { return }	
+      fileImageView.image = image
+   } catch let error {
+      ...
+   }
 }
 ```
 
@@ -38,8 +38,8 @@ As I've mentioned, I'm able to work in different modes with allowing for serial 
 Using serial mode (downloading files in the queue one by one):
 
 ```swift
-	let configuration = CedricConfiguration(mode: .serial)
-	return Cedric(configuration: configuration)
+let configuration = CedricConfiguration(mode: .serial)
+return Cedric(configuration: configuration)
 ```
 
 ![gif](Resources/cedric-serial.gif)
@@ -47,8 +47,8 @@ Using serial mode (downloading files in the queue one by one):
 Using parallel mode (with concurent 3 tasks): 
 
 ```swift
-	let configuration = CedricConfiguration(mode: .parallel(max: 3))
-	return Cedric(configuration: configuration)
+let configuration = CedricConfiguration(mode: .parallel(max: 3))
+return Cedric(configuration: configuration)
 ```
 
 ![gif](Resources/cedric-parallel.gif)
