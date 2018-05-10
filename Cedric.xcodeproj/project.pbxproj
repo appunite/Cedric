@@ -52,6 +52,7 @@
 		AD5EAD20209F6D9400AEB97E /* Cedric.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cedric.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD5EAD23209F6D9400AEB97E /* Cedric.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cedric.h; sourceTree = "<group>"; };
 		AD5EAD24209F6D9400AEB97E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD6651B220A4C613009FF7AB /* Cedric.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Cedric.xcconfig; sourceTree = "<group>"; };
 		ADA1DFA020A390C7000522A2 /* DownloadError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadError.swift; sourceTree = "<group>"; };
 		ADA1DFA620A456D0000522A2 /* FileManagerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
 		ADA1DFAC20A4580B000522A2 /* CedricExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CedricExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +134,7 @@
 		AD5EAD22209F6D9400AEB97E /* Cedric */ = {
 			isa = PBXGroup;
 			children = (
+				AD6651B220A4C613009FF7AB /* Cedric.xcconfig */,
 				AD5EAD23209F6D9400AEB97E /* Cedric.h */,
 				AD5EAD24209F6D9400AEB97E /* Info.plist */,
 				ADAC1713209F6E3D0033FA7B /* Cedric.swift */,
@@ -407,6 +409,7 @@
 /* Begin XCBuildConfiguration section */
 		AD5EAD26209F6D9400AEB97E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD6651B220A4C613009FF7AB /* Cedric.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -470,6 +473,7 @@
 		};
 		AD5EAD27209F6D9400AEB97E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD6651B220A4C613009FF7AB /* Cedric.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -546,6 +550,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.AppUnite.Cedric;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -573,6 +578,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.AppUnite.Cedric;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
