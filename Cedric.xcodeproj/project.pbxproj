@@ -107,19 +107,19 @@
 		AD5EAD22209F6D9400AEB97E /* Cedric */ = {
 			isa = PBXGroup;
 			children = (
-				ADA1DFA620A456D0000522A2 /* FileManagerExtensions.swift */,
 				AD5EAD23209F6D9400AEB97E /* Cedric.h */,
 				AD5EAD24209F6D9400AEB97E /* Info.plist */,
 				ADAC1713209F6E3D0033FA7B /* Cedric.swift */,
-				AD423AD720A37C00003C3E99 /* DownloadsFileManager.swift */,
-				ADD61E8320A2D4B400616745 /* CedricDelegate.swift */,
 				ADD61E8120A25A5F00616745 /* CedricConfiguration.swift */,
+				ADD61E8320A2D4B400616745 /* CedricDelegate.swift */,
+				ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */,
+				ADA1DFA020A390C7000522A2 /* DownloadError.swift */,
+				ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */,
+				ADAC171A20A031080033FA7B /* DownloadResource.swift */,
+				AD423AD720A37C00003C3E99 /* DownloadsFileManager.swift */,
+				ADA1DFA620A456D0000522A2 /* FileManagerExtensions.swift */,
 				ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */,
 				ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */,
-				ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */,
-				ADA1DFA020A390C7000522A2 /* DownloadError.swift */,
-				ADAC171A20A031080033FA7B /* DownloadResource.swift */,
-				ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */,
 			);
 			path = Cedric;
 			sourceTree = "<group>";
@@ -128,8 +128,8 @@
 			isa = PBXGroup;
 			children = (
 				ADD61E7220A22CC000616745 /* Resources */,
-				ADAC172420A034A90033FA7B /* CedricTests.swift */,
 				ADAC172620A034A90033FA7B /* Info.plist */,
+				ADAC172420A034A90033FA7B /* CedricTests.swift */,
 				ADAC172D20A036010033FA7B /* TestResources.swift */,
 			);
 			path = CedricTests;
