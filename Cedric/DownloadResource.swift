@@ -11,7 +11,7 @@ public enum DownloadMode {
     case notDownloadIfExists
 }
 
-public struct DownloadResource {
+public struct DownloadResource: Equatable {
     /// Identifier of downloaded resource
     public let id: String
     
@@ -33,5 +33,9 @@ public struct DownloadResource {
         self.destinationName = destinationName
         self.mode = mode
         self.attributes = attributes
+    }
+    
+    public static func == (lhs: DownloadResource, rhs: DownloadResource) -> Bool {
+        return lhs.id == rhs.id && lhs.mode == rhs.mode && lhs.source == rhs.source && lhs.destinationName == rhs.destinationName
     }
 }

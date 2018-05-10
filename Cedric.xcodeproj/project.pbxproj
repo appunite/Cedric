@@ -153,13 +153,13 @@
 		ADA1DFAD20A4580B000522A2 /* CedricExample */ = {
 			isa = PBXGroup;
 			children = (
+				ADA1DFBA20A4580F000522A2 /* Info.plist */,
 				ADA1DFAE20A4580B000522A2 /* AppDelegate.swift */,
+				ADA1DFBE20A459F1000522A2 /* DownloadPreviewTableViewCell.swift */,
 				ADA1DFB020A4580B000522A2 /* ViewController.swift */,
-				ADA1DFB220A4580B000522A2 /* Main.storyboard */,
 				ADA1DFB520A4580F000522A2 /* Assets.xcassets */,
 				ADA1DFB720A4580F000522A2 /* LaunchScreen.storyboard */,
-				ADA1DFBA20A4580F000522A2 /* Info.plist */,
-				ADA1DFBE20A459F1000522A2 /* DownloadPreviewTableViewCell.swift */,
+				ADA1DFB220A4580B000522A2 /* Main.storyboard */,
 			);
 			path = CedricExample;
 			sourceTree = "<group>";
