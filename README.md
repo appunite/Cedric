@@ -6,9 +6,9 @@ Hey! My name is **Cedric**, I was born to help iOS / macOS developers with a qui
 
 ## What are my responsibilities? 
 
-Behind just downloading files I'm able to perorm operations like:
+Behind just downloading files I'm able to perform operations like:
 - notify about updates via **MulticastDelegate**
-- perorm operations in a **serial** or **parallel (with limit)** options
+- perform operations in a **serial** or **parallel (with limit)** options
 - perform browser-like download with **always creating new files**
 - **reuse** already downloaded files for the same resource 
 - notify that all resources from queue are downloaded 
@@ -75,7 +75,7 @@ Then run `pod install`.
 
 ### Contribution
 
-Project is created and maintened by **Szymon Mrozek**.
+Project is created and maintained by **Szymon Mrozek**.
 
 We could use your help with reporting or fixing bugs. We would also like to hear from you about feature suggestions. If you have an idea how to make Cedric better you are welcome to send us a Pull Request.
 
