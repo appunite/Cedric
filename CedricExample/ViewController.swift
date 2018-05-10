@@ -58,7 +58,12 @@ class ViewController: UITableViewController {
         if let task = cedric.downloadTask(forResource: resource) {
             cell.bindWith(task: task)
         }
+        
         cedric.addDelegate(cell)
+        cell.reuse = { [weak self] c in
+            self?.cedric.removeDelegate(c)
+        }
+        
         return cell
     }
     

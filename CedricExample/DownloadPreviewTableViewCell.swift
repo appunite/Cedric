@@ -19,6 +19,7 @@ class DownloadPreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var resource: DownloadResource!
+    var reuse: ((DownloadPreviewTableViewCell) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -100,6 +101,7 @@ class DownloadPreviewTableViewCell: UITableViewCell {
         super.prepareForReuse()
         resource = nil
         fileImageView.image = nil
+        reuse?(self)
     }
 }
 
