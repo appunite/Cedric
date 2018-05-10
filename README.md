@@ -2,17 +2,17 @@
 
 ## Who am I? 
 
-Hey! My name is Cedric, I was born to help iOS / macOS developers with a quite difficult task that is downloading files. 
+Hey! My name is **Cedric**, I was born to help iOS / macOS developers with a quite difficult task that is downloading files. 
 
 ## What are my responsibilities? 
 
 Behind just downloading files I'm able to perorm operations like:
-- notify about updates via *MulticastDelegate*
-- perorm operations in a *serial* or *parallel (with limit)* options
-- perform browser-like download with always creating new files 
-- reuse already downloaded files for the same resource 
+- notify about updates via **MulticastDelegate**
+- perorm operations in a **serial** or **parallel (with limit)** options
+- perform browser-like download with **always creating new files**
+- **reuse** already downloaded files for the same resource 
 - notify that all resources from queue are downloaded 
-- I'll apply attributes to files specified in resource
+- apply attributes to files specified in resource
 
 ## Example usage 
 
@@ -62,7 +62,6 @@ github "appunite/Cedric"
 ```
 
 Then run `carthage update`.
-
 
 ### Cocoapods
 
