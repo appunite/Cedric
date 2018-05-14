@@ -1,3 +1,10 @@
+[![Carthage compatible](https://img.shields.io/badge/Carthage-Compatible-brightgreen.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Cocoapods](https://img.shields.io/cocoapods/v/Cedric.svg?style=flat)](https://cocoapods.org/pods/Cedric)
+[![Platform](https://img.shields.io/cocoapods/p/Cedric.svg?style=flat)](https://cocoapods.org/pods/Cedric)
+[![Build Status](https://travis-ci.org/appunite/Cedric.svg)](https://travis-ci.org/codecov/example-swift) 
+[![codecov.io](https://codecov.io/gh/appunite/Cedric/branch/master/graphs/badge.svg)](https://codecov.io/gh/codecov/example-swift/branch/master)
+[![License](https://img.shields.io/cocoapods/l/Cedric.svg?style=flat)](https://cocoapods.org/pods/Cedric)
+
 # Cedric
 
 ## Who am I? 

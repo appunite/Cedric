@@ -1,0 +1,26 @@
+language: swift
+osx_image: xcode9.3
+
+env:
+  global:
+    - PROJECT='Cedric.xcodeproj'
+    - SCHEME='Cedric'
+    - IOS_DESTINATION='platform=iOS Simulator,name=iPhone 8'
+    - TVOS_DESTINATION='platform=tvOS Simulator,name=Apple TV'
+    - MACOS_DESTINATION='platform=OS X'
+    - CONFIGURATION="Debug"
+
+before_install:
+  - bundle install
+  - brew update
+  - brew outdated xctool || brew upgrade xctool
+
+script:
+  - set -o pipefail
+  - swift --version
+  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "$IOS_DESTINATION" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
+  - bash <(curl -s https://codecov.io/bash) -cF ios -J 'Cedric'
+  # - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "$TVOS_DESTINATION" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
+  # - bash <(curl -s https://codecov.io/bash) -cF tvos -J 'Cedric'
+  # - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "$MACOS_DESTINATION" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
+  # - bash <(curl -s https://codecov.io/bash) -cF osx -J 'Cedric'
