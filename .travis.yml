@@ -1,0 +1,25 @@
+language: swift
+osx_image: xcode9.3
+
+env:
+  global:
+    - PROJECT='Cedric.xcodeproj'
+    - SCHEME='Cedric'
+    - IOS_DESTINATION='platform=iOS Simulator,name=iPhone 8'
+    - TVOS_DESTINATION='platform=tvOS Simulator,name=Apple TV'
+    - MACOS_DESTINATION='platform=OS X'
+
+before_install:
+  - bundle install
+  - brew update
+  - brew outdated xctool || brew upgrade xctool
+
+script:
+  - set -o pipefail
+  - swift --version
+  - xcodebuild clean build test -project "$PROJECT" -scheme "$SCHEME" -destination "$IOS_DESTINATION" | xcpretty
+  - bash <(curl -s https://codecov.io/bash) -cF ios -J 'Cedric'
+  - xcodebuild clean build test -project "$PROJECT" -scheme "$SCHEME" -destination "$TVOS_DESTINATION" | xcpretty
+  - bash <(curl -s https://codecov.io/bash) -cF tvos -J 'Cedric'
+  - xcodebuild clean build test -project "$PROJECT" -scheme "$SCHEME" -destination "$MACOS_DESTINATION" | xcpretty
+  - bash <(curl -s https://codecov.io/bash) -cF osx -J 'Cedric'
