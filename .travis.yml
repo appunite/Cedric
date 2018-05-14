@@ -18,9 +18,9 @@ before_install:
 script:
   - set -o pipefail
   - swift --version
-  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "OS=11.2,name=iPhone 6" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
+  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "$IOS_DESTINATION" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
   - bash <(curl -s https://codecov.io/bash) -cF ios -J 'Cedric'
-  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "OS=11.2,name=iPhone 6" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
-  - bash <(curl -s https://codecov.io/bash) -cF tvos -J 'Cedric'
-  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "OS=11.2,name=iPhone 6" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
-  - bash <(curl -s https://codecov.io/bash) -cF osx -J 'Cedric'
+  # - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "$TVOS_DESTINATION" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
+  # - bash <(curl -s https://codecov.io/bash) -cF tvos -J 'Cedric'
+  # - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -destination "$MACOS_DESTINATION" -configuration "$CONFIGURATION" -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES build test | xcpretty
+  # - bash <(curl -s https://codecov.io/bash) -cF osx -J 'Cedric'
