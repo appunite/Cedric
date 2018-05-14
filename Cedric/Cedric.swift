@@ -170,14 +170,14 @@ public class Cedric {
             
             let semaphore = DispatchSemaphore(value: 0)
             
-            strongItem.completionBlock = {
-                semaphore.signal()
+            strongItem.completionBlock = { [weak semaphore] in
+                semaphore?.signal()
             }
 
             strongItem.resume()
             semaphore.wait()
         })
-        
+    
         group.addAsyncOperation(operation: operation)
         
         delegates.invoke({ [task = item.task!] in
