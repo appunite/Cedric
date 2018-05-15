@@ -60,6 +60,9 @@ return Cedric(configuration: configuration)
 
 <img src="Resources/cedric-parallel.gif" width="300" height="500" />
 
+**Important note**
+By default all files are stored in "Downloads" directory, if you want to store them in different directory please pass it's name to `CedricConfiguration` object. The same configuration should be passed if you use `FileManager.cedricPath(...)`
+
 ### Carthage
 
 Add the following entry in your Cartfile:

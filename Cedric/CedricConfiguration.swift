@@ -15,15 +15,19 @@ public struct CedricConfiguration {
         case parallel(max: Int)
     }
     
-    /// Base queue of operations
-    public let queue: OperationQueue
-    
     /// Downloading mode serial / parallel
     public let mode: Mode
     
-    public init(mode: Mode, queue: OperationQueue = OperationQueue()) {
-        self.queue = queue
+    /// Base queue of operations
+    public let queue: OperationQueue
+    
+    /// Base downloads directory name, i.e. "this-property-value/your-file-name.png"
+    public let baseDownloadsDirectoryName: String
+    
+    public init(mode: Mode, queue: OperationQueue = OperationQueue(), baseDownloadsDirectoryName: String = "Downloads") {
         self.mode = mode
+        self.queue = queue
+        self.baseDownloadsDirectoryName = baseDownloadsDirectoryName
     }
     
     /// Default configuration is parallel up to 25 tasks

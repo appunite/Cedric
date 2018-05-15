@@ -10,17 +10,23 @@ import Foundation
 
 internal protocol FileManagerType: class {
     func downloadsDirectory(create: Bool) throws -> URL
-     
     func move(fromPath source: URL, toPath destination: URL, resource: DownloadResource) throws
     func cleanDownloadsDirectory() throws
     func removeFile(atPath path: URL) throws
+    func createUrl(forName name: String, unique: Bool) throws -> URL
 }
 
 internal class DownloadsFileManager: FileManagerType {
     
+    let baseDownloadsDirectoryName: String
+    
+    internal init(withBaseDownloadsDirectoryName baseDownloadsDirectoryName: String) {
+        self.baseDownloadsDirectoryName = baseDownloadsDirectoryName
+    }
+    
     internal func downloadsDirectory(create: Bool = false) throws -> URL {
         return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: create)
-            .appendingPathComponent("Downloads")
+            .appendingPathComponent(baseDownloadsDirectoryName)
     }
     
     internal func createUrl(forName name: String, unique: Bool) throws -> URL {

@@ -22,12 +22,12 @@ public class Cedric {
         self.items = []
         self.configuration = configuration
         self.group = configuration.limitedGroup()
-        self.fileManager = DownloadsFileManager()
+        self.fileManager = DownloadsFileManager(withBaseDownloadsDirectoryName: configuration.baseDownloadsDirectoryName)
         delegates = MulticastDelegate<CedricDelegate>(delegateQueue: delegateQueue)
 
     }
     
-    internal init(configuration: CedricConfiguration = CedricConfiguration.default, fileManager: FileManagerType = DownloadsFileManager(), delegateQueue: DispatchQueue = DispatchQueue.main) {
+    internal init(configuration: CedricConfiguration = CedricConfiguration.default, fileManager: FileManagerType = DownloadsFileManager(withBaseDownloadsDirectoryName: "Downloads"), delegateQueue: DispatchQueue = DispatchQueue.main) {
         self.items = []
         self.configuration = configuration
         self.group = configuration.limitedGroup()
@@ -144,7 +144,7 @@ public class Cedric {
     /// - Parameter filename: expected filename
     /// - Returns: DownloadedFile object if file exists at path
     public func existingFileIfAvailable(forExpectedFilename filename: String) -> DownloadedFile? {
-        let url = try? DownloadsFileManager().downloadsDirectory().appendingPathComponent(filename)
+        let url = try? fileManager.downloadsDirectory(create: false).appendingPathComponent(filename)
         guard let unwrappedUrl = url, FileManager.default.fileExists(atPath: unwrappedUrl.path) else { return nil }
         return try? DownloadedFile(absolutePath: unwrappedUrl)
     }
