@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Cedric"
-  s.version      = "0.2.0"
+  s.version      = "0.2.2"
   s.summary      = "Cedric - Single / multiple files downloader written in pure Swift"
 
   s.homepage     = "https://github.com/appunite/Cedric"
