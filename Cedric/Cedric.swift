@@ -180,9 +180,20 @@ public class Cedric {
     
         group.addAsyncOperation(operation: operation)
         
-        delegates.invoke({ [task = item.task!] in
-            $0.cedric(self, didStartDownloadingResource: item.resource, withTask: task)
+        delegates.invoke({ [task = item.task!, resource = item.resource] in
+            $0.cedric(self, didStartDownloadingResource: resource, withTask: task)
         })
+    }
+    
+    fileprivate func remove(downloadItem item: DownloadItem) {
+        guard let index = items.index(of: item) else { return }
+        let item = items[index]
+        
+        items.remove(at: index)
+        item.releaseReferences()
+        
+        guard items.isEmpty else { return }
+        delegates.invoke({ $0.cedric(self, didFinishWithMostRecentError: self.lastError) })
     }
 }
 
@@ -190,14 +201,18 @@ public class Cedric {
 
 extension Cedric: DownloadItemDelegate {
     internal func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
-        delegates.invoke({ $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: item.resource) })
+        delegates.invoke({ [resource = item.resource, task] in
+            $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: resource)
+        })
         item.delegate = nil
         remove(downloadItem: item)
     }
     
     internal func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask) {
         // single item progress report
-        delegates.invoke({ $0.cedric(self, didUpdateStatusOfTask: task, relatedToResource: item.resource) })
+        delegates.invoke({ [task, resource = item.resource] in
+            $0.cedric(self, didUpdateStatusOfTask: task, relatedToResource: resource)
+        })
         
         // maybe should consider some groupped resources progress reporting ...
     }
@@ -205,25 +220,16 @@ extension Cedric: DownloadItemDelegate {
     internal func item(_ item: DownloadItem, didFinishDownloadingTo location: URL) {
         do {
             let file = try DownloadedFile(absolutePath: location)
-            delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: item.resource, toFile: file) })
+            delegates.invoke({ [resource = item.resource] in
+                $0.cedric(self, didFinishDownloadingResource: resource, toFile: file)
+            })
         } catch let error {
-            delegates.invoke({ [task = item.task!] in
-                $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: item.resource)
+            delegates.invoke({ [task = item.task!, resource = item.resource] in
+                $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: resource)
             })
         }
         
         item.delegate = nil
         remove(downloadItem: item)
-    }
-    
-    fileprivate func remove(downloadItem item: DownloadItem) {
-        guard let index = items.index(of: item) else { return }
-        let item = items[index]
-
-        items.remove(at: index)
-        item.releaseReferences()
-        
-        guard items.isEmpty else { return }
-        delegates.invoke({ $0.cedric(self, didFinishWithMostRecentError: self.lastError) })
     }
 }

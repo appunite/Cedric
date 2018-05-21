@@ -23,7 +23,7 @@ internal class MulticastDelegate<T> {
     }
     
     internal func addDelegate(_ delegate: T) {
-        queue.async { [weak self] in 
+        queue.async { [weak self] in
             self?.delegates.add(delegate as AnyObject)
         }
     }
