@@ -70,27 +70,24 @@ extension ConcurrentArray {
 
 // Mutable
 extension ConcurrentArray {
-    func append( _ element: T) {
+    internal func append( _ element: T) {
         queue.async(flags: .barrier) {
             self.array.append(element)
         }
     }
 
-    func remove(where predicate: @escaping (T) -> Bool) {
+    internal func remove(where predicate: @escaping (T) -> Bool) {
         queue.async(flags: .barrier) {
             guard let index = self.array.index(where: predicate) else { return }
             self.array.remove(at: index)
         }
     }
     
-    func removeAll() {
+    internal func removeAll() {
         queue.async(flags: .barrier) {
             self.array.removeAll()
         }
     }
-}
-
-extension ConcurrentArray {
 
     internal subscript(index: Int) -> T? {
         get {
@@ -118,12 +115,5 @@ extension ConcurrentArray where T: Equatable {
         var result = false
         queue.sync { result = self.array.contains(element) }
         return result
-    }
-}
-
-extension ConcurrentArray {
-    
-    internal static func +=(left: inout ConcurrentArray, right: T) {
-        left.append(right)
     }
 }

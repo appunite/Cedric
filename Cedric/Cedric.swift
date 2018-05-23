@@ -155,7 +155,8 @@ public class Cedric {
     ///
     /// - Returns: Currently under operation tasks
     public func getActiveTasks() -> [URLSessionDownloadTask] {
-        return items.map{ $0.task }
+        return items
+            .map{ $0.task }
             .compactMap { $0 }
     }
     
@@ -168,15 +169,15 @@ public class Cedric {
         item.delegate = self
         
         let operation = BlockOperation(block: { [weak item] in
-            guard let strongItem = item else { return }
-            
+            // prevent locking queue
+            guard item != nil else { return }
             let semaphore = DispatchSemaphore(value: 0)
             
-            strongItem.completionBlock = { [weak semaphore] in
+            item?.completionBlock = { [weak semaphore] in
                 semaphore?.signal()
             }
 
-            strongItem.resume()
+            item?.resume()
             semaphore.wait()
         })
     
