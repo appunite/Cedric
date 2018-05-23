@@ -18,6 +18,7 @@
 		ADA1DFB920A4580F000522A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADA1DFB720A4580F000522A2 /* LaunchScreen.storyboard */; };
 		ADA1DFBF20A459F1000522A2 /* DownloadPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1DFBE20A459F1000522A2 /* DownloadPreviewTableViewCell.swift */; };
 		ADA1DFC120A45A2C000522A2 /* Cedric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5EAD20209F6D9400AEB97E /* Cedric.framework */; };
+		ADAB9DAC20B57B13009A51D2 /* ConcurrentArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAB9DAB20B57B13009A51D2 /* ConcurrentArray.swift */; };
 		ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1713209F6E3D0033FA7B /* Cedric.swift */; };
 		ADAC1719209F6F2F0033FA7B /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */; };
 		ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC171A20A031080033FA7B /* DownloadResource.swift */; };
@@ -63,6 +64,7 @@
 		ADA1DFB820A4580F000522A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADA1DFBA20A4580F000522A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADA1DFBE20A459F1000522A2 /* DownloadPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPreviewTableViewCell.swift; sourceTree = "<group>"; };
+		ADAB9DAB20B57B13009A51D2 /* ConcurrentArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentArray.swift; sourceTree = "<group>"; };
 		ADAC1713209F6E3D0033FA7B /* Cedric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cedric.swift; sourceTree = "<group>"; };
 		ADAC1718209F6F2F0033FA7B /* DownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
 		ADAC171A20A031080033FA7B /* DownloadResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadResource.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				ADA1DFA620A456D0000522A2 /* FileManagerExtensions.swift */,
 				ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */,
 				ADAC171C20A031B50033FA7B /* MulticastDelegate.swift */,
+				ADAB9DAB20B57B13009A51D2 /* ConcurrentArray.swift */,
 			);
 			path = Cedric;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				ADAC171B20A031080033FA7B /* DownloadResource.swift in Sources */,
 				ADA1DFA720A456D0000522A2 /* FileManagerExtensions.swift in Sources */,
 				ADAC1714209F6E3D0033FA7B /* Cedric.swift in Sources */,
+				ADAB9DAC20B57B13009A51D2 /* ConcurrentArray.swift in Sources */,
 				ADAC171D20A031B50033FA7B /* MulticastDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

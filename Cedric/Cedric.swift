@@ -12,14 +12,14 @@ public class Cedric {
     
     internal var delegates: MulticastDelegate<CedricDelegate>
     
-    private var items: [DownloadItem]
+    private var items: ConcurrentArray<DownloadItem>
     private let group: LimitedOperationGroup
     private let configuration: CedricConfiguration
     private var lastError: Error?
     private let fileManager: FileManagerType
     
     public init(configuration: CedricConfiguration = CedricConfiguration.default, delegateQueue: DispatchQueue = DispatchQueue.main) {
-        self.items = []
+        self.items = ConcurrentArray<DownloadItem>()
         self.configuration = configuration
         self.group = configuration.limitedGroup()
         self.fileManager = DownloadsFileManager(withBaseDownloadsDirectoryName: configuration.baseDownloadsDirectoryName)
@@ -28,7 +28,7 @@ public class Cedric {
     }
     
     internal init(configuration: CedricConfiguration = CedricConfiguration.default, fileManager: FileManagerType = DownloadsFileManager(withBaseDownloadsDirectoryName: "Downloads"), delegateQueue: DispatchQueue = DispatchQueue.main) {
-        self.items = []
+        self.items = ConcurrentArray<DownloadItem>()
         self.configuration = configuration
         self.group = configuration.limitedGroup()
         self.fileManager = fileManager
@@ -190,7 +190,7 @@ public class Cedric {
         let item = items[index]
         
         items.remove(at: index)
-        item.releaseReferences()
+        item?.releaseReferences()
         
         guard items.isEmpty else { return }
         delegates.invoke({ $0.cedric(self, didFinishWithMostRecentError: self.lastError) })
