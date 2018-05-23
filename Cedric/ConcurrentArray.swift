@@ -75,42 +75,17 @@ extension ConcurrentArray {
             self.array.append(element)
         }
     }
-    
-    func insert( _ element: T, at index: Int) {
-        queue.async(flags: .barrier) {
-            self.array.insert(element, at: index)
-        }
-    }
 
-    func remove(at index: Int, completion: ((T) -> Void)? = nil) {
-        queue.async(flags: .barrier) {
-            let element = self.array.remove(at: index)
-            
-            DispatchQueue.main.async {
-                completion?(element)
-            }
-        }
-    }
-
-    func remove(where predicate: @escaping (T) -> Bool, completion: ((T) -> Void)? = nil) {
+    func remove(where predicate: @escaping (T) -> Bool) {
         queue.async(flags: .barrier) {
             guard let index = self.array.index(where: predicate) else { return }
-            let element = self.array.remove(at: index)
-            
-            DispatchQueue.main.async {
-                completion?(element)
-            }
+            self.array.remove(at: index)
         }
     }
     
-    func removeAll(completion: (([T]) -> Void)? = nil) {
+    func removeAll() {
         queue.async(flags: .barrier) {
-            let elements = self.array
             self.array.removeAll()
-            
-            DispatchQueue.main.async {
-                completion?(elements)
-            }
         }
     }
 }
@@ -143,10 +118,6 @@ extension ConcurrentArray where T: Equatable {
         var result = false
         queue.sync { result = self.array.contains(element) }
         return result
-    }
-    
-    internal func index(of element: T) -> Int? {
-        return self.index(where: { $0 == element })
     }
 }
 

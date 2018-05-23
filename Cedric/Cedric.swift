@@ -82,8 +82,10 @@ public class Cedric {
         items.forEach {
             $0.delegate = nil
             $0.cancel()
-            remove(downloadItem: $0)
+            $0.releaseReferences()
         }
+        
+        items.removeAll()
     }
     
     /// Insert new delegate for multicast
@@ -186,11 +188,8 @@ public class Cedric {
     }
     
     fileprivate func remove(downloadItem item: DownloadItem) {
-        guard let index = items.index(of: item) else { return }
-        let item = items[index]
-        
-        items.remove(at: index)
-        item?.releaseReferences()
+        item.releaseReferences()
+        items.remove(where: { $0 == item })
         
         guard items.isEmpty else { return }
         delegates.invoke({ $0.cedric(self, didFinishWithMostRecentError: self.lastError) })
