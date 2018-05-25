@@ -33,6 +33,9 @@ internal class DownloadItem: NSObject {
         super.init()
 
         let configuration = URLSessionConfiguration.default
+        if #available(iOS 11.0, *) {
+            configuration.waitsForConnectivity = true
+        }
         
         self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: delegateQueue)
     
