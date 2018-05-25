@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Cedric {
+public class Cedric: NSObject {
     
     internal var delegates: MulticastDelegate<CedricDelegate>
     
@@ -17,14 +17,12 @@ public class Cedric {
     private let configuration: CedricConfiguration
     private var lastError: Error?
     private let fileManager: FileManagerType
+    private var session: URLSession!
     
-    public init(configuration: CedricConfiguration = CedricConfiguration.default, delegateQueue: DispatchQueue = DispatchQueue.main) {
-        self.items = ConcurrentArray<DownloadItem>()
-        self.configuration = configuration
-        self.group = configuration.limitedGroup()
-        self.fileManager = DownloadsFileManager(withBaseDownloadsDirectoryName: configuration.baseDownloadsDirectoryName)
-        delegates = MulticastDelegate<CedricDelegate>(delegateQueue: delegateQueue)
-
+    public convenience init(configuration: CedricConfiguration = CedricConfiguration.default, delegateQueue: DispatchQueue = DispatchQueue.main) {
+        self.init(configuration: configuration,
+                  fileManager: DownloadsFileManager(withBaseDownloadsDirectoryName: configuration.baseDownloadsDirectoryName),
+                  delegateQueue: delegateQueue)
     }
     
     internal init(configuration: CedricConfiguration = CedricConfiguration.default, fileManager: FileManagerType = DownloadsFileManager(withBaseDownloadsDirectoryName: "Downloads"), delegateQueue: DispatchQueue = DispatchQueue.main) {
@@ -33,6 +31,14 @@ public class Cedric {
         self.group = configuration.limitedGroup()
         self.fileManager = fileManager
         delegates = MulticastDelegate<CedricDelegate>(delegateQueue: delegateQueue)
+        
+        let sessionConfiguration = URLSessionConfiguration.default
+        if #available(iOS 11.0, *) {
+            sessionConfiguration.waitsForConnectivity = true
+        }
+        
+        super.init()
+        self.session = URLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: configuration.queue)
     }
     
     /// Schedule multiple downloads
@@ -47,7 +53,7 @@ public class Cedric {
     /// - Parameter resouce: resource to be downloaded
     public func enqueueDownload(forResource resource: DownloadResource) throws {
         cleanQueueStatisticsIfNeeded()
-        let item = try DownloadItem(resource: resource, delegateQueue: configuration.queue, fileManager: fileManager)
+        let item = try DownloadItem(resource: resource, fileManager: fileManager, session: session)
         
         switch resource.mode {
         case .newFile:
@@ -55,6 +61,7 @@ public class Cedric {
         case .notDownloadIfExists:
             if let existing = existingFileIfAvailable(forExpectedFilename: resource.destinationName) {
                 delegates.invoke({ $0.cedric(self, didFinishDownloadingResource: resource, toFile: existing) })
+                item.cancel()
                 return
             } else {
                 guard !items.contains(where: { $0.resource.destinationName == resource.destinationName }) else { return }
@@ -71,7 +78,6 @@ public class Cedric {
     public func cancel(downloadingResourcesWithId id: String) {
         items.filter { $0.resource.id == id }
             .forEach {
-                $0.delegate = nil
                 $0.cancel()
                 remove(downloadItem: $0)
             }
@@ -79,12 +85,7 @@ public class Cedric {
     
     /// Cancel all running downloads
     public func cancelAllDownloads() {
-        items.forEach {
-            $0.delegate = nil
-            $0.cancel()
-            $0.releaseReferences()
-        }
-        
+        items.forEach { $0.cancel() }
         items.removeAll()
     }
     
@@ -155,8 +156,7 @@ public class Cedric {
     ///
     /// - Returns: Currently under operation tasks
     public func getActiveTasks() -> [URLSessionDownloadTask] {
-        return items
-            .map{ $0.task }
+        return items.map{ $0.task }
             .compactMap { $0 }
     }
     
@@ -166,8 +166,6 @@ public class Cedric {
     }
     
     private func createAndScheduleOperation(forItem item: DownloadItem) {
-        item.delegate = self
-        
         let operation = BlockOperation(block: { [weak item] in
             // prevent locking queue
             guard item != nil else { return }
@@ -183,13 +181,12 @@ public class Cedric {
     
         group.addAsyncOperation(operation: operation)
         
-        delegates.invoke({ [task = item.task!, resource = item.resource] in
-            $0.cedric(self, didStartDownloadingResource: resource, withTask: task)
+        delegates.invoke({
+            $0.cedric(self, didStartDownloadingResource: item.resource, withTask: item.task)
         })
     }
     
     fileprivate func remove(downloadItem item: DownloadItem) {
-        item.releaseReferences()
         items.remove(where: { $0 == item })
         
         guard items.isEmpty else { return }
@@ -197,39 +194,41 @@ public class Cedric {
     }
 }
 
-// MARK: - DownloadItemDelegate
-
-extension Cedric: DownloadItemDelegate {
-    internal func item(_ item: DownloadItem, withTask task: URLSessionDownloadTask, didCompleteWithError error: Error?) {
-        delegates.invoke({ [resource = item.resource, task] in
-            $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: resource)
+extension Cedric: URLSessionTaskDelegate, URLSessionDownloadDelegate {
+    public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        guard let item = items.first(where: { $0.task.taskIdentifier == task.taskIdentifier && $0.task.taskDescription == task.taskDescription }) else { return }
+        delegates.invoke({
+            $0.cedric(self, didCompleteWithError: error, withTask: task as! URLSessionDownloadTask, whenDownloadingResource: item.resource)
         })
-        item.delegate = nil
+        
+        item.completionBlock?()
         remove(downloadItem: item)
     }
     
-    internal func item(_ item: DownloadItem, didUpdateStatusOfTask task: URLSessionDownloadTask) {
+    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        guard let item = items.first(where: { $0.task.taskIdentifier == downloadTask.taskIdentifier && $0.task.taskDescription == downloadTask.taskDescription }) else { return }
         // single item progress report
-        delegates.invoke({ [task, resource = item.resource] in
-            $0.cedric(self, didUpdateStatusOfTask: task, relatedToResource: resource)
+        delegates.invoke({
+            $0.cedric(self, didUpdateStatusOfTask: downloadTask, relatedToResource: item.resource)
         })
         
         // maybe should consider some groupped resources progress reporting ...
     }
     
-    internal func item(_ item: DownloadItem, didFinishDownloadingTo location: URL) {
+    public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        guard let item = items.first(where: { $0.task.taskIdentifier == downloadTask.taskIdentifier && $0.task.taskDescription == downloadTask.taskDescription }) else { return }
         do {
-            let file = try DownloadedFile(absolutePath: location)
-            delegates.invoke({ [resource = item.resource] in
-                $0.cedric(self, didFinishDownloadingResource: resource, toFile: file)
+            let newLocation = try item.moveToProperLocation(from: location)
+            let file = try DownloadedFile(absolutePath: newLocation)
+            delegates.invoke({
+                $0.cedric(self, didFinishDownloadingResource: item.resource, toFile: file)
             })
         } catch let error {
-            delegates.invoke({ [task = item.task!, resource = item.resource] in
-                $0.cedric(self, didCompleteWithError: error, withTask: task, whenDownloadingResource: resource)
+            delegates.invoke({
+                $0.cedric(self, didCompleteWithError: error, withTask: downloadTask, whenDownloadingResource: item.resource)
             })
         }
-        
-        item.delegate = nil
+        item.completionBlock?()
         remove(downloadItem: item)
     }
 }
