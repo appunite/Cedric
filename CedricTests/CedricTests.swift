@@ -64,8 +64,8 @@ class CedricTests: XCTestCase {
             let receivedImage = UIImage(contentsOfFile: url.path)
             let originalImage = resource.localImageRepresentation
             XCTAssertNotNil(receivedImage)
-            let receivedData: NSData = UIImagePNGRepresentation(receivedImage!)! as NSData
-            let originalData: NSData = UIImagePNGRepresentation(originalImage)! as NSData
+            let receivedData = receivedImage!.pngData()! as NSData
+            let originalData = originalImage.pngData()! as NSData
             XCTAssertEqual(receivedData.isEqual(originalData), true)
             didCompleteSuccessfuly.fulfill()
         }
@@ -81,13 +81,13 @@ class CedricTests: XCTestCase {
         let didCompleteExpectations = sources.map { expectation(description: "Did complete downloading item with id: \($0.id)") }
 
         delegate?.didStartDownloadingResource = { resource in
-            guard let index = sources.index(where: { $0.id == resource.id }) else { return }
+            guard let index = sources.firstIndex(where: { $0.id == resource.id }) else { return }
             didStartExpectations[index].fulfill()
         }
         
         delegate?.didFinishDownloadingResource = { (resource, file) in
             let url = try! file.url()
-            guard let index = sources.index(where: { $0.id == resource.id }) else { return }
+            guard let index = sources.firstIndex(where: { $0.id == resource.id }) else { return }
             XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             didCompleteExpectations[index].fulfill()
         }
@@ -233,7 +233,7 @@ class CedricTests: XCTestCase {
         
         delegate?.didFinishDownloadingResource = { (resource, file) in
             let url = try! file.url()
-            guard let index = self.resources.index(where: { $0.id == resource.id }) else { return }
+            guard let index = self.resources.firstIndex(where: { $0.id == resource.id }) else { return }
             XCTAssertNotNil(UIImage(contentsOfFile: url.path))
             debugPrint("Did download task with id \(resource.id)")
             didCompleteExpectations[index].fulfill()
@@ -283,8 +283,8 @@ class CedricTests: XCTestCase {
             let receivedImage = UIImage(contentsOfFile: url.path)
             let originalImage = resource.localImageRepresentation
             XCTAssertNotNil(receivedImage)
-            let receivedData: NSData = UIImagePNGRepresentation(receivedImage!)! as NSData
-            let originalData: NSData = UIImagePNGRepresentation(originalImage)! as NSData
+            let receivedData = receivedImage!.pngData()! as NSData
+            let originalData = originalImage.pngData()! as NSData
             XCTAssertEqual(receivedData.isEqual(originalData), true)
             didCompleteSuccessfuly.fulfill()
 

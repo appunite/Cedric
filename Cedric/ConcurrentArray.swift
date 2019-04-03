@@ -47,7 +47,7 @@ extension ConcurrentArray {
     
     internal func index(where predicate: (T) -> Bool) -> Int? {
         var result: Int?
-        queue.sync { result = self.array.index(where: predicate) }
+        queue.sync { result = self.array.firstIndex(where: predicate) }
         return result
     }
     
@@ -78,7 +78,7 @@ extension ConcurrentArray {
 
     internal func remove(where predicate: @escaping (T) -> Bool) {
         queue.async(flags: .barrier) {
-            guard let index = self.array.index(where: predicate) else { return }
+            guard let index = self.array.firstIndex(where: predicate) else { return }
             self.array.remove(at: index)
         }
     }

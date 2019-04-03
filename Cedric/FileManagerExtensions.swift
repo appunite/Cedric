@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension FileManager {
+extension FileManager {
     public static func cedricPath(forResourceWithName name: String, usingConfiguration configuration: CedricConfiguration = CedricConfiguration.default) -> URL? {
         let fileManager = DownloadsFileManager(withBaseDownloadsDirectoryName: configuration.baseDownloadsDirectoryName)
         guard let downloads = try? fileManager.downloadsDirectory() else { return nil }
