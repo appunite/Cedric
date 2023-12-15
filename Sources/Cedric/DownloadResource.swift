@@ -6,6 +6,8 @@
 //  Copyright © 2018 AppUnite. All rights reserved.
 //
 
+import Foundation
+
 public enum DownloadMode {
     case newFile
     case notDownloadIfExists
