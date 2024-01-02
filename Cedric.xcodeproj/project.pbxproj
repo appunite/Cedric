@@ -27,15 +27,14 @@
 		ADAC172720A034A90033FA7B /* Cedric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5EAD20209F6D9400AEB97E /* Cedric.framework */; };
 		ADAC172E20A036010033FA7B /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172D20A036010033FA7B /* TestResources.swift */; };
 		ADAC173020A0809E0033FA7B /* DownloadedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */; };
-		ADD61E7920A22CD500616745 /* baboon.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7320A22CD500616745 /* baboon.png */; };
-		ADD61E7A20A22CD500616745 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7420A22CD500616745 /* airplane.png */; };
-		ADD61E7B20A22CD500616745 /* arctichare.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7520A22CD500616745 /* arctichare.png */; };
-		ADD61E7C20A22CD500616745 /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7620A22CD500616745 /* cat.png */; };
-		ADD61E7D20A22CD500616745 /* boat.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7720A22CD500616745 /* boat.png */; };
-		ADD61E7E20A22CD500616745 /* fruits.png in Resources */ = {isa = PBXBuildFile; fileRef = ADD61E7820A22CD500616745 /* fruits.png */; };
 		ADD61E8020A25A4000616745 /* LimitedOperationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */; };
 		ADD61E8220A25A5F00616745 /* CedricConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD61E8120A25A5F00616745 /* CedricConfiguration.swift */; };
 		ADD61E8420A2D4B400616745 /* CedricDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD61E8320A2D4B400616745 /* CedricDelegate.swift */; };
+		E7B6C91B2B2C78BE000B0C39 /* baboon.png in Resources */ = {isa = PBXBuildFile; fileRef = E7B6C9162B2C78BE000B0C39 /* baboon.png */; };
+		E7B6C91C2B2C78BE000B0C39 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = E7B6C9172B2C78BE000B0C39 /* airplane.png */; };
+		E7B6C91D2B2C78BE000B0C39 /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = E7B6C9182B2C78BE000B0C39 /* cat.png */; };
+		E7B6C91E2B2C78BE000B0C39 /* fruits.png in Resources */ = {isa = PBXBuildFile; fileRef = E7B6C9192B2C78BE000B0C39 /* fruits.png */; };
+		E7B6C91F2B2C78BE000B0C39 /* boat.png in Resources */ = {isa = PBXBuildFile; fileRef = E7B6C91A2B2C78BE000B0C39 /* boat.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,15 +73,15 @@
 		ADAC172620A034A90033FA7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADAC172D20A036010033FA7B /* TestResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
 		ADAC172F20A0809E0033FA7B /* DownloadedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedFile.swift; sourceTree = "<group>"; };
-		ADD61E7320A22CD500616745 /* baboon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = baboon.png; path = CedricTests/TestResources/baboon.png; sourceTree = SOURCE_ROOT; };
-		ADD61E7420A22CD500616745 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = airplane.png; path = CedricTests/TestResources/airplane.png; sourceTree = SOURCE_ROOT; };
-		ADD61E7520A22CD500616745 /* arctichare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arctichare.png; path = CedricTests/TestResources/arctichare.png; sourceTree = SOURCE_ROOT; };
-		ADD61E7620A22CD500616745 /* cat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cat.png; path = CedricTests/TestResources/cat.png; sourceTree = SOURCE_ROOT; };
-		ADD61E7720A22CD500616745 /* boat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = boat.png; path = CedricTests/TestResources/boat.png; sourceTree = SOURCE_ROOT; };
-		ADD61E7820A22CD500616745 /* fruits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fruits.png; path = CedricTests/TestResources/fruits.png; sourceTree = SOURCE_ROOT; };
 		ADD61E7F20A25A4000616745 /* LimitedOperationGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedOperationGroup.swift; sourceTree = "<group>"; };
 		ADD61E8120A25A5F00616745 /* CedricConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CedricConfiguration.swift; sourceTree = "<group>"; };
 		ADD61E8320A2D4B400616745 /* CedricDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CedricDelegate.swift; sourceTree = "<group>"; };
+		E7B6C9082B2C7289000B0C39 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		E7B6C9162B2C78BE000B0C39 /* baboon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baboon.png; sourceTree = "<group>"; };
+		E7B6C9172B2C78BE000B0C39 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
+		E7B6C9182B2C78BE000B0C39 /* cat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cat.png; sourceTree = "<group>"; };
+		E7B6C9192B2C78BE000B0C39 /* fruits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fruits.png; sourceTree = "<group>"; };
+		E7B6C91A2B2C78BE000B0C39 /* boat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boat.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +114,9 @@
 		AD5EAD16209F6D9400AEB97E = {
 			isa = PBXGroup;
 			children = (
-				AD5EAD22209F6D9400AEB97E /* Cedric */,
-				ADAC172320A034A90033FA7B /* CedricTests */,
+				E7B6C9082B2C7289000B0C39 /* Package.swift */,
+				E7B6C9072B2C7281000B0C39 /* Tests */,
+				E7B6C9062B2C727D000B0C39 /* Sources */,
 				ADA1DFAD20A4580B000522A2 /* CedricExample */,
 				AD5EAD21209F6D9400AEB97E /* Products */,
 				ADA1DFC020A45A2C000522A2 /* Frameworks */,
@@ -136,9 +136,9 @@
 		AD5EAD22209F6D9400AEB97E /* Cedric */ = {
 			isa = PBXGroup;
 			children = (
+				AD5EAD24209F6D9400AEB97E /* Info.plist */,
 				AD6651B220A4C613009FF7AB /* Cedric.xcconfig */,
 				AD5EAD23209F6D9400AEB97E /* Cedric.h */,
-				AD5EAD24209F6D9400AEB97E /* Info.plist */,
 				ADAC1713209F6E3D0033FA7B /* Cedric.swift */,
 				ADD61E8120A25A5F00616745 /* CedricConfiguration.swift */,
 				ADD61E8320A2D4B400616745 /* CedricDelegate.swift */,
@@ -179,7 +179,7 @@
 		ADAC172320A034A90033FA7B /* CedricTests */ = {
 			isa = PBXGroup;
 			children = (
-				ADD61E7220A22CC000616745 /* Resources */,
+				E7B6C9152B2C78AE000B0C39 /* TestResources */,
 				ADAC172620A034A90033FA7B /* Info.plist */,
 				ADAC172420A034A90033FA7B /* CedricTests.swift */,
 				ADAC172D20A036010033FA7B /* TestResources.swift */,
@@ -187,17 +187,32 @@
 			path = CedricTests;
 			sourceTree = "<group>";
 		};
-		ADD61E7220A22CC000616745 /* Resources */ = {
+		E7B6C9062B2C727D000B0C39 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				ADD61E7420A22CD500616745 /* airplane.png */,
-				ADD61E7520A22CD500616745 /* arctichare.png */,
-				ADD61E7320A22CD500616745 /* baboon.png */,
-				ADD61E7720A22CD500616745 /* boat.png */,
-				ADD61E7620A22CD500616745 /* cat.png */,
-				ADD61E7820A22CD500616745 /* fruits.png */,
+				AD5EAD22209F6D9400AEB97E /* Cedric */,
 			);
-			path = Resources;
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		E7B6C9072B2C7281000B0C39 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC172320A034A90033FA7B /* CedricTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		E7B6C9152B2C78AE000B0C39 /* TestResources */ = {
+			isa = PBXGroup;
+			children = (
+				E7B6C9172B2C78BE000B0C39 /* airplane.png */,
+				E7B6C9162B2C78BE000B0C39 /* baboon.png */,
+				E7B6C91A2B2C78BE000B0C39 /* boat.png */,
+				E7B6C9182B2C78BE000B0C39 /* cat.png */,
+				E7B6C9192B2C78BE000B0C39 /* fruits.png */,
+			);
+			path = TestResources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,12 +347,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADD61E7920A22CD500616745 /* baboon.png in Resources */,
-				ADD61E7D20A22CD500616745 /* boat.png in Resources */,
-				ADD61E7E20A22CD500616745 /* fruits.png in Resources */,
-				ADD61E7B20A22CD500616745 /* arctichare.png in Resources */,
-				ADD61E7C20A22CD500616745 /* cat.png in Resources */,
-				ADD61E7A20A22CD500616745 /* airplane.png in Resources */,
+				E7B6C91C2B2C78BE000B0C39 /* airplane.png in Resources */,
+				E7B6C91B2B2C78BE000B0C39 /* baboon.png in Resources */,
+				E7B6C91D2B2C78BE000B0C39 /* cat.png in Resources */,
+				E7B6C91E2B2C78BE000B0C39 /* fruits.png in Resources */,
+				E7B6C91F2B2C78BE000B0C39 /* boat.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,7 +479,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -523,7 +537,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -545,9 +559,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Cedric/Info.plist;
+				INFOPLIST_FILE = Sources/Cedric/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -574,9 +588,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Cedric/Info.plist;
+				INFOPLIST_FILE = Sources/Cedric/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -630,7 +644,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = CedricTests/Info.plist;
+				INFOPLIST_FILE = Tests/CedricTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -649,7 +663,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = CedricTests/Info.plist;
+				INFOPLIST_FILE = Tests/CedricTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
